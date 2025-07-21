@@ -43,7 +43,7 @@
         {% if work %}
         <article class="work-card" data-animate="fade-up">
         <div class="work-card-image">
-            <img src="{{ url_for('static', filename='uploads/' + work.image_filename) }}" 
+            <img src="{{ url_for('static', filename='uploads/' + (work.image_filename or 'default.jpg')) }}" 
                  alt="{{ work.title }}" 
                  loading="lazy">
             <div class="image-overlay"></div>
