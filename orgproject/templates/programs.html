@@ -1,0 +1,885 @@
+{% extends "base.html" %}
+{% block title %}Our Initiatives - xyz organization{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="about-hero programs-enhanced-hero programs-hero" style="padding: 3rem 0 2.5rem 0; min-height: 40vh;">
+    <div class="hero-background-image"></div>
+    <div class="container">
+        <div class="hero-content-box programs-hero-content">
+            <p class="hero-subtitle programs-subtitle">OUR INITIATIVES</p>
+            <h1 class="programs-main-title">Empowering Communities</h1>
+            <p class="programs-hero-description">Explore our comprehensive initiatives designed to create lasting positive impact</p>
+        </div>
+    </div>
+</section>
+
+<!-- Mobile Programs List View -->
+<section class="programs-mobile-section content-section" style="display: none; padding-top: 2rem; padding-bottom: 1.2rem;">
+    <div class="mobile-programs-list">
+        {% set mobile_programs = [
+          {"id": "funeral", "title": "Funeral Assistance", "desc": "Providing financial support for dignified funeral ceremonies for poor families.", "bg": "images/funeral.jpg"},
+          {"id": "education-centers", "title": "Education Centers", "desc": "Helping set up centers to provide free education for children in need.", "bg": "images/education.jpg"},
+          {"id": "uniform", "title": "Uniform Distribution", "desc": "Distributing school bags, shoes, sweaters, uniforms, and stationery to needy students.", "bg": "images/uniform.jpg"},
+          {"id": "eye-camp", "title": "Eye Camp", "desc": "Organizing free eye check-ups, providing glasses, and arranging cataract surgeries.", "bg": "images/eyecamp.jpg"},
+          {"id": "collaboration", "title": "Collaboration", "desc": "Partnering with other social organizations to maximize social impact.", "bg": "images/collaboration.jpg"},
+          {"id": "hope", "title": "Hope & Confidence", "desc": "Empowering children by instilling hope, self-worth, and encouraging them towards education.", "bg": "images/motiavtion.jpg"},
+          {"id": "awareness", "title": "Support & Awareness", "desc": "Raising awareness about poverty, education, health, spirituality, and social equality.", "bg": "images/awareness.jpg"}
+        ] %}
+        {% for program in mobile_programs %}
+            <article class="mobile-program-card" data-bg="{{ url_for('static', filename=program.bg) }}">
+                <a href="{{ url_for('initiative_detail', program_id=program.id) }}" class="mobile-program-link">
+                    <div class="mobile-program-overlay"></div>
+                    <div class="mobile-program-content">
+                        <div class="mobile-program-icon">
+                            {% if program.id == 'funeral' %}
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 2L12 22"/>
+                                    <path d="M8 6L16 6"/>
+                                    <path d="M8 18L16 18"/>
+                                    <path d="M4 10L20 10"/>
+                                    <path d="M4 14L20 14"/>
+                                </svg>
+                            {% elif program.id == 'education-centers' %}
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M3 21L21 21"/>
+                                    <path d="M5 21L5 7L19 7L19 21"/>
+                                    <path d="M9 9L9 13"/>
+                                    <path d="M15 9L15 13"/>
+                                    <path d="M12 2L5 7L19 7L12 2Z"/>
+                                </svg>
+                            {% elif program.id == 'free-education' %}
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                                    <path d="M6.5 2H20V22H6.5A2.5 2.5 0 0 1 4 19.5V4.5A2.5 2.5 0 0 1 6.5 2Z"/>
+                                    <path d="M8 7H16"/>
+                                    <path d="M8 11H16"/>
+                                </svg>
+                            {% elif program.id == 'uniform' %}
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M6 2L18 2"/>
+                                    <path d="M6 6L12 4L18 6"/>
+                                    <path d="M6 6L6 20L18 20L18 6"/>
+                                    <path d="M10 10L14 10"/>
+                                    <path d="M10 14L14 14"/>
+                                </svg>
+                            {% elif program.id == 'eye-camp' %}
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M1 12S5 4 12 4s11 8 11 8-4 8-11 8S1 12 1 12Z"/>
+                                    <circle cx="12" cy="12" r="3"/>
+                                </svg>
+
+                            {% elif program.id == 'motivation' %}
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="M8 14S9.5 16 12 16S16 14 16 14"/>
+                                    <line x1="9" y1="9" x2="9.01" y2="9"/>
+                                    <line x1="15" y1="9" x2="15.01" y2="9"/>
+                                </svg>
+                            {% elif program.id == 'fund' %}
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="12" y1="1" x2="12" y2="23"/>
+                                    <path d="M17 5H9.5A3.5 3.5 0 0 0 9.5 12H17"/>
+                                    <path d="M6 12H17.5A3.5 3.5 0 0 1 17.5 19H6"/>
+                                </svg>
+                            {% elif program.id == 'collaboration' %}
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M16 21V19A4 4 0 0 0 12 15H5A4 4 0 0 0 1 19V21"/>
+                                    <circle cx="8.5" cy="7" r="4"/>
+                                    <path d="M23 21V19A4 4 0 0 0 19 15"/>
+                                    <path d="M16 3.13A4 4 0 0 1 16 11"/>
+                                </svg>
+                            {% elif program.id == 'hope' %}
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M20.84 4.61A5.5 5.5 0 0 0 16 2A5.5 5.5 0 0 0 12 4A5.5 5.5 0 0 0 8 2A5.5 5.5 0 0 0 3.16 4.61C1.84 5.95 1.84 8.05 3.16 9.39L12 18.83L20.84 9.39C22.16 8.05 22.16 5.95 20.84 4.61Z"/>
+                                </svg>
+                            {% elif program.id == 'awareness' %}
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12C11 9 9 7 9 7S7 9 7 12A2.5 2.5 0 0 0 9.5 14.5Z"/>
+                                    <path d="M12 2L13 7L11 7L12 2Z"/>
+                                    <path d="M17 7L15.5 10L13.5 9L17 7Z"/>
+                                    <path d="M19 14L16 12.5L17 10.5L19 14Z"/>
+                                    <path d="M17 19L15.5 16L17.5 15L17 19Z"/>
+                                    <path d="M12 22L13 17L11 17L12 22Z"/>
+                                    <path d="M7 19L8.5 16L6.5 15L7 19Z"/>
+                                    <path d="M5 14L8 12.5L7 10.5L5 14Z"/>
+                                    <path d="M7 7L8.5 10L10.5 9L7 7Z"/>
+                                </svg>
+                            {% endif %}
+                        </div>
+                        <h2 class="mobile-program-title">{{ program.title }}</h2>
+                        <p class="mobile-program-desc">{{ program.desc }}</p>
+                    </div>
+                </a>
+            </article>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Desktop View -->
+<section class="programs-cards-section" style="padding: 0; position: relative; overflow: visible; margin-top: 3.5rem;">
+  <div class="programs-cards-list-alt">
+    {% set programs = [
+      {"title": "Funeral Assistance", "desc": "Providing financial support for dignified funeral ceremonies for poor families.", "bg": "images/funeral.jpg"},
+      {"title": "Education ", "desc": "Helping set up centers to provide free education for children in need.", "bg": "images/education.jpg"},
+      {"title": "Uniform Distribution", "desc": "Distributing school bags, shoes, sweaters, uniforms, and stationery to needy students.", "bg": "images/uniform.jpg"},
+      {"title": "Eye Camp", "desc": "Organizing free eye check-ups, providing glasses, and arranging cataract surgeries.", "bg": "images/eyecamp.jpg"},
+      {"title": "Collaboration and Networking", "desc": "Partnering with other social organizations to maximize social impact.", "bg": "images/collaboration.jpg"},
+      {"title": "Hope and Confidence", "desc": "Empowering children by instilling hope, self-worth, and encouraging them towards education.", "bg": "images/motivation.jpg"},
+      {"title": "Support and Awareness", "desc": "Raising awareness about poverty, education, health, spirituality, and social equality.", "bg": "images/awareness.jpg"}
+    ] %}
+    {% for program in programs %}
+      <div class="program-row {% if loop.index0 % 2 == 0 %}align-left{% else %}align-right{% endif %}" data-program-index="{{ loop.index0 }}">
+        <article class="program-card-large fade-in-on-scroll broken-card" data-program-index="{{ loop.index0 }}">
+          <div class="program-half left-half" {% if program.bg %}data-bg="{{ url_for('static', filename=program.bg) }}"{% endif %}>
+            <div class="program-card-body program-card-header-only">
+              <!-- Title removed from here -->
+            </div>
+          </div>
+          <div class="program-half right-half" {% if program.bg %}data-bg="{{ url_for('static', filename=program.bg) }}"{% endif %}>
+            <svg class="zigzag-edge" width="18" height="100%" viewBox="0 0 18 180" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <polyline points="0,0 18,10 0,20 18,30 0,40 18,50 0,60 18,70 0,80 18,90 0,100 18,110 0,120 18,130 0,140 18,150 0,160 18,170 0,180" stroke="#e3e6ea" stroke-width="3" fill="none"/>
+            </svg>
+            <div class="program-card-body program-card-header-only">
+              <!-- Title removed from here -->
+            </div>
+          </div>
+          <div class="program-desc-slide {% if loop.index0 % 2 == 0 %}slide-right{% else %}slide-left{% endif %}">
+            <div class="desc-slide-inner">
+              <h2 class="program-title-slide" style="color: #fff; background: none;">{{ program.title }}</h2>
+              <h3>How We Do It</h3>
+              <p>{{ program.desc }}</p>
+            </div>
+          </div>
+        </article>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+<div id="healing-message" class="healing-message"><span>That's what we do, we tie, we change and we heal</span></div>
+
+<style>
+.programs-cards-section {
+  width: 100%;
+  max-width: 100%;
+  padding: 0;
+  background: none;
+  overflow-x: hidden;
+}
+.programs-cards-list-alt {
+  display: flex;
+  flex-direction: column;
+  gap: 8rem;
+  width: 100%;
+  max-width: 100%;
+}
+.program-row {
+  display: flex;
+  width: 100%;
+  max-width: 100%;
+  position: relative;
+}
+.program-row.align-left {
+  justify-content: flex-start;
+}
+.program-row.align-right {
+  justify-content: flex-end;
+}
+.program-card-large {
+  min-width: 320px;
+  max-width: 800px;
+  width: 44vw;
+  min-height: 220px;
+  max-height: 220px;
+  height: 220px;
+  display: flex;
+  flex-direction: row;
+  background: none;
+  box-shadow: none;
+  border-radius: 0;
+  margin-left: 5vw;
+  margin-right: 5vw;
+  opacity: 0;
+  transform: translateY(30px);
+  border-left: none;
+  border-right: none;
+  position: relative;
+  overflow: visible;
+  transition: box-shadow 0.5s cubic-bezier(.4,0,.2,1), transform 0.5s cubic-bezier(.4,0,.2,1);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.program-half {
+  width: 54%;
+  min-height: 220px;
+  max-height: 220px;
+  height: 220px;
+  padding: 2.5rem 2rem 2rem 2rem;
+  background: rgba(255, 255, 255, 0.3);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 6px 32px rgba(26,34,51,0.13) !important;
+  transition: box-shadow 0.5s cubic-bezier(.4,0,.2,1), transform 0.7s cubic-bezier(.4,0,.2,1), border-radius 0.5s, background-size 0.7s, background-position 0.7s;
+  z-index: 1;
+  position: relative;
+  overflow: hidden;
+}
+.left-half {
+  border-top-left-radius: 22px;
+  border-bottom-left-radius: 22px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  transform: translateY(-18px) rotate(-2deg);
+  box-shadow: 0 6px 32px rgba(26,34,51,0.13) !important;
+  animation: swing-left 2.2s infinite alternate ease-in-out;
+}
+.right-half {
+  border-top-right-radius: 22px;
+  border-bottom-right-radius: 22px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  transform: translateY(18px) rotate(2deg);
+  box-shadow: 0 6px 32px rgba(26,34,51,0.13) !important;
+  animation: swing-right 2.2s infinite alternate ease-in-out;
+  display: flex;
+  align-items: flex-start;
+}
+.zigzag-edge {
+  position: absolute;
+  left: -9px;
+  top: 0;
+  height: 100%;
+  width: 18px;
+  z-index: 2;
+  pointer-events: none;
+  background: none;
+  transition: opacity 0.5s cubic-bezier(.4,0,.2,1);
+}
+.right-half .program-card-body { display: block; }
+@keyframes swing-left {
+  0% { transform: translateY(-18px) rotate(-2deg); }
+  100% { transform: translateY(-8px) rotate(-6deg); }
+}
+@keyframes swing-right {
+  0% { transform: translateY(18px) rotate(2deg); }
+  100% { transform: translateY(8px) rotate(6deg); }
+}
+.program-card-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background: none;
+  padding: 0;
+  position: relative;
+  z-index: 1;
+  color: #fff;
+  padding: 2.2rem 2rem 1.8rem 2rem;
+  border-radius: 18px;
+  overflow: hidden;
+}
+.program-card-title, .program-card-desc {
+  color: #fff;
+  text-shadow: 0 2px 12px rgba(22,50,92,0.22), 0 1px 2px rgba(0,0,0,0.13);
+}
+.program-card-title {
+  font-size: 1.45rem;
+  font-weight: 700;
+  margin: 0 0 0.7em 0;
+  letter-spacing: 0.01em;
+}
+.program-card-desc {
+  font-size: 1.13rem;
+  margin-bottom: 0;
+  line-height: 1.6;
+}
+.program-card-large:hover .half {
+  box-shadow: 0 14px 40px rgba(26,34,51,0.18);
+  transform: translateY(-8px) scale(1.025);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .fade-in-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s cubic-bezier(.4,0,.2,1), transform 0.7s cubic-bezier(.4,0,.2,1);
+  }
+  .fade-in-on-scroll.visible {
+    opacity: 1;
+    transform: none;
+  }
+}
+/* Mobile Grid Styles */
+.programs-mobile-grid {
+  padding: 2rem 0;
+  background: var(--color-background-light);
+}
+
+.mobile-programs-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.mobile-program-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border-radius: var(--border-radius);
+  text-decoration: none;
+  color: white;
+  min-height: 160px;
+  box-shadow: 0 6px 32px rgba(26,34,51,0.13);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.mobile-program-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 14px 40px rgba(26,34,51,0.18);
+  color: white;
+}
+
+.mobile-program-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  transition: background 0.3s ease;
+}
+
+.mobile-program-card:hover .mobile-program-overlay {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.mobile-program-content {
+  position: relative;
+  z-index: 2;
+  padding: 1.5rem 1rem;
+  text-align: center;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+}
+
+.mobile-program-icon {
+  color: white;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+
+.mobile-program-icon svg {
+  width: 32px;
+  height: 32px;
+  stroke: white;
+}
+
+.mobile-program-title {
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-align: center;
+  margin: 0;
+  line-height: 1.3;
+  color: white;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+@media (max-width: 900px) {
+  .programs-cards-section {
+    display: none !important;
+  }
+  
+  .programs-mobile-grid {
+    display: block !important;
+  }
+  
+  .program-card-large {
+    min-width: calc(100% - 6vw);
+    max-width: calc(100% - 6vw);
+    width: calc(100% - 6vw);
+    min-height: 140px;
+    max-height: 140px;
+    height: 140px;
+    margin-left: 3vw;
+    margin-right: 3vw;
+    flex-direction: column;
+  }
+  .program-half {
+    width: 100%;
+    min-height: 140px;
+    max-height: 140px;
+    height: 140px;
+    padding: 1.2rem 0.7rem 1rem 0.7rem;
+    border-radius: 0 !important;
+    transform: none !important;
+    box-shadow: 0 6px 32px rgba(26,34,51,0.13);
+    animation: none !important;
+    background-size: cover !important;
+    background-position: center !important;
+  }
+  .zigzag-edge { display: none; }
+  .program-half .program-card-body {
+    display: block;
+  }
+  .program-half.left-half .program-card-title,
+  .program-half.right-half .program-card-title {
+    display: inline;
+  }
+  .program-half.left-half .program-card-desc,
+  .program-half.right-half .program-card-desc {
+    display: inline;
+  }
+  .program-card-body {
+    padding: 1.2rem 0.7rem 1rem 0.7rem;
+    border-radius: 0 !important;
+  }
+  .program-half.left-half,
+  .program-half.right-half {
+    background-size: cover !important;
+    background-position: center !important;
+  }
+  .program-card-large .program-desc-slide {
+    position: static;
+    width: 100%;
+    max-width: 100%;
+    border-radius: 0 0 18px 18px;
+    box-shadow: none;
+    margin-top: 0.5rem;
+    transform: translateY(30px);
+    opacity: 0;
+    transition: transform 0.5s, opacity 0.3s;
+  }
+  .program-card-large.fixed .program-desc-slide {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .program-card-large .slide-right, .program-card-large .slide-left {
+    left: 0 !important;
+    right: 0 !important;
+    transform: translateY(30px);
+  }
+  .programs-cards-list-alt {
+    gap: 1.5rem;
+  }
+}
+.program-card-large .program-desc-slide {
+  width: calc(100% - 40px);
+  margin: 0 auto;
+  background: #0d2c4f;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s cubic-bezier(.4,0,.2,1);
+  padding: 1.5rem 2rem;
+}
+.program-card-large:hover .program-desc-slide {
+  opacity: 1;
+  pointer-events: auto;
+}
+.program-card-large .program-desc-slide p,
+.program-card-large .program-desc-slide h3,
+.program-card-large .program-desc-slide h2 {
+  color: #000;
+}
+.program-row.align-left .program-desc-slide {
+  left: calc(100% + 24px);
+  right: auto;
+  transform: translateY(-50%) translateX(-80px) scale(0.98);
+  transition: transform 0.5s cubic-bezier(.4,0,.2,1), opacity 0.3s cubic-bezier(.4,0,.2,1);
+}
+.program-row.align-right .program-desc-slide {
+  right: calc(100% + 24px);
+  left: auto;
+  transform: translateY(-50%) translateX(80px) scale(0.98);
+  transition: transform 0.5s cubic-bezier(.4,0,.2,1), opacity 0.3s cubic-bezier(.4,0,.2,1);
+}
+.program-card-large.fixed .program-desc-slide {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(-50%) translateX(0) scale(1);
+}
+.program-desc-slide .desc-slide-inner {
+  width: 100%;
+  color: #fff;
+  text-align: left;
+}
+.program-desc-slide .desc-slide-inner h3 {
+  margin-top: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #fff;
+}
+.program-desc-slide .desc-slide-inner p {
+  font-size: 1.02rem;
+  color: #e0e4ea;
+  margin-bottom: 0;
+}
+@media (max-width: 900px) {
+  .program-card-large .program-desc-slide {
+    position: static;
+    width: 100%;
+    max-width: 100%;
+    border-radius: 0 !important;
+    box-shadow: none;
+    margin-top: 0.5rem;
+    transform: translateY(30px);
+    opacity: 0;
+    transition: transform 0.5s, opacity 0.3s;
+    left: 0 !important;
+    right: 0 !important;
+    background: #0d2c4f;
+    color: #fff;
+    padding: 0.7rem 0.7rem 0.6rem 0.7rem;
+    min-height: unset;
+    max-height: 90px;
+  }
+  .program-card-large.fixed .program-desc-slide {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.program-row .right-half .program-card-title-bg,
+.program-row .left-half .program-card-title-bg,
+.program-card-title-bg {
+  background: #0d2c4f !important;
+  color: #fff !important;
+  border-radius: 0 !important;
+  margin: 0 auto;
+  text-align: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+  min-width: 0;
+  max-width: 90%;
+  width: auto;
+  box-sizing: border-box;
+  padding: 0.25em 1.1em;
+}
+.program-half.right-half .program-card-header-only,
+.program-half.left-half .program-card-header-only {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+.program-card-title-only {
+  color: #fff !important;
+  font-size: 1.65rem;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: 0.01em;
+  width: 100%;
+  text-align: center;
+  line-height: 1.18;
+  padding: 0.1em 0;
+}
+.program-card-header-only {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+@media (max-width: 900px) {
+  .program-card-title-only {
+    font-size: 1.25rem;
+  }
+  .program-row .right-half .program-card-title-bg,
+  .program-row .left-half .program-card-title-bg,
+  .program-card-title-bg {
+    padding: 0.18em 0.7em;
+    max-width: 98%;
+  }
+}
+.program-card-large.fixed .left-half,
+.program-card-large:hover .left-half {
+  transform: none !important;
+  border-top-left-radius: 22px;
+  border-bottom-left-radius: 22px;
+  box-shadow: none !important;
+  animation: none !important;
+}
+.program-card-large.fixed .right-half,
+.program-card-large:hover .right-half {
+  transform: none !important;
+  border-top-right-radius: 22px;
+  border-bottom-right-radius: 22px;
+  box-shadow: none !important;
+  animation: none !important;
+  align-items: center;
+}
+.program-card-large.fixed .zigzag-edge,
+.program-card-large:hover .zigzag-edge {
+  opacity: 0;
+}
+.program-card-large.fixed,
+.program-card-large:hover {
+  box-shadow: 0 14px 40px rgba(26,34,51,0.18);
+  transform: translateY(-8px) scale(1.025);
+}
+.program-card-large.repair-step-1 .left-half {
+  transform: translateY(-10px) rotate(-1deg) !important;
+  animation: none !important;
+}
+.program-card-large.repair-step-1 .right-half {
+  transform: translateY(10px) rotate(1deg) !important;
+  animation: none !important;
+}
+.program-card-large.repair-step-2 .left-half,
+.program-card-large.repair-step-2 .right-half {
+  transform: translateY(0) rotate(0deg) !important;
+  animation: none !important;
+}
+.program-card-large.repair-step-3 .zigzag-edge {
+  opacity: 0.5;
+}
+.program-card-large.repair-step-4 .zigzag-edge {
+  opacity: 0;
+}
+.program-card-large.repair-step-4 .left-half,
+.program-card-large.repair-step-4 .right-half {
+  box-shadow: 0 6px 32px rgba(26,34,51,0.13);
+}
+.program-card-large.break-step-3 .zigzag-edge {
+  opacity: 0.5;
+}
+.program-card-large.break-step-2 .zigzag-edge {
+  opacity: 1;
+}
+.program-card-large.break-step-1 .left-half {
+  transform: translateY(-10px) rotate(-1deg) !important;
+  animation: swing-left 2.2s infinite alternate ease-in-out;
+}
+.program-card-large.break-step-1 .right-half {
+  transform: translateY(10px) rotate(1deg) !important;
+  animation: swing-right 2.2s infinite alternate ease-in-out;
+}
+.program-card-large.break-step-0 .left-half {
+  transform: translateY(-18px) rotate(-2deg) !important;
+  animation: swing-left 2.2s infinite alternate ease-in-out;
+}
+.program-card-large.break-step-0 .right-half {
+  transform: translateY(18px) rotate(2deg) !important;
+  animation: swing-right 2.2s infinite alternate ease-in-out;
+}
+.program-title-slide {
+  color: #fff !important;
+  background: none !important;
+}
+
+/* Enhanced Programs Hero Section */
+.programs-enhanced-hero {
+  position: relative;
+  overflow: hidden;
+}
+
+.programs-enhanced-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6));
+  z-index: 1;
+}
+
+.programs-hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.programs-subtitle {
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.programs-main-title {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 1rem 0;
+  line-height: 1.2;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.programs-hero-description {
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+  line-height: 1.5;
+  font-weight: 300;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* Responsive Programs Hero */
+@media (max-width: 768px) {
+  .programs-enhanced-hero {
+    padding: 2rem 0 2rem 0 !important;
+    min-height: 35vh !important;
+  }
+  
+  .programs-subtitle {
+    font-size: 0.8rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .programs-main-title {
+    font-size: 2.2rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .programs-hero-description {
+    font-size: 1rem;
+    padding: 0 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .programs-main-title {
+    font-size: 1.8rem;
+  }
+  
+  .programs-hero-description {
+    font-size: 0.95rem;
+  }
+}
+</style>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Set background images for program halves (no blue gradient overlay)
+  document.querySelectorAll('.program-half[data-bg]').forEach(function(el) {
+    var bg = el.getAttribute('data-bg');
+    if (bg) {
+      var isLeft = el.classList.contains('left-half');
+      var pos = isLeft ? 'left center' : 'right center';
+      var size = window.innerWidth > 900 ? '200% 100%' : 'cover';
+      var position = window.innerWidth > 900 ? pos : 'center';
+      el.style.backgroundImage = 'url(' + bg + ')'; // No gradient
+      el.style.backgroundSize = size;
+      el.style.backgroundPosition = position;
+      el.style.backgroundRepeat = 'no-repeat';
+      el.style.opacity = '0.9'; // Add some opacity to ensure it's visible
+      console.log('Setting background for:', el.className, 'with image:', bg); // Debug log
+    }
+  });
+
+  // Set background images for mobile program cards
+  document.querySelectorAll('.mobile-program-card[data-bg]').forEach(function(el) {
+    var bg = el.getAttribute('data-bg');
+    if (bg) {
+      el.style.backgroundImage = 'url(' + bg + ')';
+      el.style.backgroundSize = 'cover';
+      el.style.backgroundPosition = 'center';
+      el.style.backgroundRepeat = 'no-repeat';
+    }
+  });
+  // Fade-in on scroll for cards
+  const cards = document.querySelectorAll('.fade-in-on-scroll');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  cards.forEach(card => observer.observe(card));
+
+  // Fix card and show description on hover
+  document.querySelectorAll('.program-card-large').forEach(function(card) {
+    let repairTimeouts = [];
+    let breakTimeouts = [];
+    let isRepairing = false;
+    let isBreaking = false;
+    function clearAllTimeouts() {
+      repairTimeouts.forEach(clearTimeout);
+      breakTimeouts.forEach(clearTimeout);
+      repairTimeouts = [];
+      breakTimeouts = [];
+    }
+    function startRepair() {
+      clearAllTimeouts();
+      isRepairing = true;
+      isBreaking = false;
+      card.classList.remove('break-step-0','break-step-1','break-step-2','break-step-3','fixed');
+      card.classList.add('repair-step-1');
+      repairTimeouts.push(setTimeout(function() {
+        card.classList.add('repair-step-2');
+      }, 180));
+      repairTimeouts.push(setTimeout(function() {
+        card.classList.add('repair-step-3');
+      }, 350));
+      repairTimeouts.push(setTimeout(function() {
+        card.classList.add('repair-step-4');
+        card.classList.add('fixed');
+      }, 600));
+    }
+    function startBreak() {
+      clearAllTimeouts();
+      isRepairing = false;
+      isBreaking = true;
+      card.classList.remove('repair-step-4','repair-step-3','repair-step-2','repair-step-1','fixed');
+      card.classList.add('break-step-3');
+      breakTimeouts.push(setTimeout(function() {
+        card.classList.add('break-step-2');
+        card.classList.remove('break-step-3');
+      }, 180));
+      breakTimeouts.push(setTimeout(function() {
+        card.classList.add('break-step-1');
+        card.classList.remove('break-step-2');
+      }, 350));
+      breakTimeouts.push(setTimeout(function() {
+        card.classList.add('break-step-0');
+        card.classList.remove('break-step-1');
+      }, 600));
+      breakTimeouts.push(setTimeout(function() {
+        card.classList.remove('break-step-0');
+      }, 1200));
+    }
+    card.addEventListener('mouseenter', function() {
+      startRepair();
+    });
+    card.addEventListener('mouseleave', function() {
+      startBreak();
+    });
+  });
+});
+</script>
+{% endblock %}

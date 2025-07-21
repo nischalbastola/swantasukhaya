@@ -1,0 +1,467 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="about-page">
+
+    <!-- Hero Section -->
+    <section class="about-hero about-enhanced-hero" style="padding: 3rem 0 2.5rem 0; min-height: 40vh;">
+        <div class="hero-background-image" style="background-image: url('{{ url_for('static', filename='images/hero-home.jpg') }}');"></div>
+        <div class="container">
+            <div class="hero-content-box about-hero-content">
+                <p class="hero-subtitle about-subtitle">ABOUT US</p>
+                <h1 class="about-main-title">Our Story & Mission</h1>
+                <p class="about-hero-description">Learn about our journey of compassionate service and community impact</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Introduction Text -->
+    <section class="about-intro content-section" style="padding-top: 2rem; padding-bottom: 1.2rem;">
+        <div class="intro-grid">
+            <div class="intro-decoration">
+                <div class="crosshair"></div>
+            </div>
+            <div class="intro-text">
+                <h3>Who We Are</h3>
+                <p>Swantasukhaya Paropakar Pratishthan, established on 2072 Kartik 11 by Prof. Dr. Krishna Kumar Shrestha in Pokhara, Nepal, is dedicated to selfless service. Guided by the mission "Supporting the Helpless," we work to uplift poor, helpless, and marginalized individuals with compassion and dignity.</p>
+                <p>Our efforts include funeral assistance, educational programs, health camps, and community support. We believe true charity expects nothing in return but brings positive change to society. Every act of kindness plants seeds of hope, turning despair into smiles. "Paropkaro Param Dharma" selfless service is the greatest virtue we uphold in every step we take.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Principal's Welcome -->
+    <section class="principal-welcome content-section" style="margin-bottom: 1.5rem; padding: 1.5rem 0;">
+        <div class="principal-image">
+            <img src="{{ url_for('static', filename='images/founder.jpg') }}" alt="Founder">
+        </div>
+        <div class="principal-text">
+            <div class="quote-icon">"</div>
+            <h2>Words from the Founder.</h2>
+            <p>We founded this organization with one belief that no one should suffer alone. Every small act of kindness can light up a life. Serving the helpless is not charity, it is our responsibility as human beings.</p>
+            <p class="principal-name"><strong>Prof. Dr. Krishna Kumar Shrestha</strong><br>Founder</p>
+        </div>
+    </section>
+
+    <!-- Meet the Team Section -->
+    <section class="team-section content-section" style="padding: 2.2rem 0 1.5rem 0;">
+        <div class="container">
+            <h2 class="team-heading">Leadership</h2>
+            <p class="team-subheading">We're led by a team who constantly questions, tinkers, and challenges to unlock great creativity around every turn.</p>
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="team-photo"><img src="{{ url_for('static', filename='images/gallery1.jpg') }}" alt="Team Member 1"></div>
+                    <div class="team-info">
+                        <div class="team-name">Bryan Wiener</div>
+                        <div class="team-title">Executive Chairman</div>
+                    </div>
+                </div>
+                <div class="team-member">
+                    <div class="team-photo"><img src="{{ url_for('static', filename='images/gallery3.jpg') }}" alt="Team Member 2"></div>
+                    <div class="team-info">
+                        <div class="team-name">Sarah Hofstetter</div>
+                        <div class="team-title">Chief Executive Officer</div>
+                    </div>
+                </div>
+                <div class="team-member">
+                    <div class="team-photo"><img src="{{ url_for('static', filename='images/gallery1.jpg') }}" alt="Team Member 3"></div>
+                    <div class="team-info">
+                        <div class="team-name">Jared Belsky</div>
+                        <div class="team-title">President</div>
+                    </div>
+                </div>
+                <div class="team-member">
+                    <div class="team-photo"><img src="{{ url_for('static', filename='images/gallery3.jpg') }}" alt="Team Member 4"></div>
+                    <div class="team-info">
+                        <div class="team-name">Pierre Lipton</div>
+                        <div class="team-title">Chief Creative Officer</div>
+                    </div>
+                </div>
+                <div class="team-member">
+                    <div class="team-photo team-photo-square"><img src="{{ url_for('static', filename='images/gallery1.jpg') }}" alt="Team Member 5"></div>
+                    <div class="team-info">
+                        <div class="team-name">Lee Maicon</div>
+                        <div class="team-title">Chief Strategy Officer</div>
+                    </div>
+                </div>
+                <div class="team-member">
+                    <div class="team-photo"><img src="{{ url_for('static', filename='images/gallery3.jpg') }}" alt="Team Member 6"></div>
+                    <div class="team-info">
+                        <div class="team-name">Abbey Klaassen</div>
+                        <div class="team-title">Chief Marketing Officer</div>
+                    </div>
+                </div>
+                <div class="team-member">
+                    <div class="team-photo"><img src="{{ url_for('static', filename='images/gallery1.jpg') }}" alt="Team Member 7"></div>
+                    <div class="team-info">
+                        <div class="team-name">Geline Midouin</div>
+                        <div class="team-title">Chief Talent Officer</div>
+                    </div>
+                </div>
+                <div class="team-member">
+                    <div class="team-photo"><img src="{{ url_for('static', filename='images/gallery3.jpg') }}" alt="Team Member 8"></div>
+                    <div class="team-info">
+                        <div class="team-name">Thomas Meisner</div>
+                        <div class="team-title">Chief Financial Officer</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Admission Steps -->
+    <section class="admission-steps content-section" style="padding-top: 1.2rem; padding-bottom: 1.2rem;">
+        <p class="section-subtitle">Join The Team</p>
+        <h2>Simple Steps To Join Us</h2>
+        <div class="steps-container">
+            <div class="step-card">
+                <div class="step-icon-wrapper">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 17L17 7M17 7H8M17 7V16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div class="step-text-content">
+                    <h3>STEP ONE</h3>
+                    <h4>Contact Us</h4>
+                    <p>Fill out the contact form in this site to express your interest in our team.</p>
+                </div>
+            </div>
+            <div class="step-card">
+                <div class="step-icon-wrapper">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 17L17 7M17 7H8M17 7V16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div class="step-text-content">
+                    <h3>STEP TWO</h3>
+                    <h4>Documents</h4>
+                    <p>Complete and submit an online application form by given due date stated.</p>
+                </div>
+            </div>
+            <div class="step-card">
+                <div class="step-icon-wrapper">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 17L17 7M17 7H8M17 7V16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div class="step-text-content">
+                    <h3>STEP THREE</h3>
+                    <h4>Orientation</h4>
+                    <p>Make a schedule and attend an oreintation session for new members.</p>
+                </div>
+            </div>
+            <div class="step-card">
+                <div class="step-icon-wrapper">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 17L17 7M17 7H8M17 7V16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div class="step-text-content">
+                    <h3>STEP FOUR</h3>
+                    <h4>Start</h4>
+                    <p>Get involved in ongoing programs and contribute your skills to help those in need.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<style>
+/* Enhanced About Hero Section */
+.about-enhanced-hero {
+  position: relative;
+  overflow: hidden;
+}
+
+.about-enhanced-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6));
+  z-index: 1;
+}
+
+.about-hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.about-subtitle {
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.about-main-title {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 1rem 0;
+  line-height: 1.2;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.about-hero-description {
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+  line-height: 1.5;
+  font-weight: 300;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* Responsive About Hero */
+@media (max-width: 768px) {
+  .about-enhanced-hero {
+    padding: 2rem 0 2rem 0 !important;
+    min-height: 35vh !important;
+  }
+  
+  .about-subtitle {
+    font-size: 0.8rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .about-main-title {
+    font-size: 2.2rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .about-hero-description {
+    font-size: 1rem;
+    padding: 0 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-main-title {
+    font-size: 1.8rem;
+  }
+  
+  .about-hero-description {
+    font-size: 0.95rem;
+  }
+}
+
+.team-section {
+    background: #f8f9fa;
+    border-radius: 18px;
+    margin: 0 auto 2.2rem auto;
+    max-width: 1200px;
+    box-shadow: 0 2px 16px rgba(26,34,51,0.06);
+    text-align: center;
+}
+.team-heading {
+    color: #16325c;
+    font-size: 2.1rem;
+    font-family: var(--font-serif, 'Playfair Display', serif);
+    font-weight: 700;
+    letter-spacing: 0.13em;
+    margin-bottom: 0.5rem;
+    margin-top: 0;
+}
+.team-subheading {
+    color: #4a5568;
+    font-size: 1.08rem;
+    margin-bottom: 2.2rem;
+    font-family: var(--font-sans, 'Inter', sans-serif);
+}
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 2.2rem 1.5rem;
+    justify-items: center;
+    align-items: start;
+    margin: 0 auto;
+    max-width: 950px;
+}
+.team-member {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 2px 12px rgba(13,44,79,0.07);
+    padding: 2.1rem 1.2rem 1.2rem 1.2rem;
+    transition: box-shadow 0.18s, transform 0.18s;
+    position: relative;
+    width: 100%;
+    max-width: 240px;
+    min-height: 200px;
+}
+.team-member:hover {
+    box-shadow: 0 8px 28px rgba(13,44,79,0.13);
+    transform: translateY(-4px) scale(1.03);
+}
+.team-photo {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-bottom: 1.1rem;
+    border: 3px solid #e3e6ea;
+    background: #e3e6ea;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.team-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+.team-photo-square {
+    border-radius: 50% !important;
+    width: 110px;
+    height: 110px;
+}
+.team-info {
+    text-align: center;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 60px;
+}
+.team-name {
+    font-size: 1.08rem;
+    font-weight: 700;
+    color: #16325c;
+    margin-bottom: 0.2em;
+    line-height: 1.3;
+}
+.team-title {
+    font-size: 0.98rem;
+    color: #4a5568;
+    font-family: var(--font-sans, 'Inter', sans-serif);
+    line-height: 1.4;
+}
+
+/* Mobile responsive improvements */
+@media (max-width: 900px) {
+    .team-section { 
+        padding: 1.5rem 1rem; 
+        margin: 0 1rem 2.2rem 1rem;
+    }
+    .team-grid { 
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem 1rem;
+        max-width: 100%;
+    }
+    .team-member { 
+        padding: 1.5rem 1rem 1rem 1rem;
+        max-width: 100%;
+        min-height: 180px;
+    }
+    .team-photo {
+        width: 90px;
+        height: 90px;
+        margin-bottom: 1rem;
+    }
+    .team-photo-square {
+        width: 90px;
+        height: 90px;
+        border-radius: 50% !important;
+    }
+    .team-name {
+        font-size: 1rem;
+    }
+    .team-title {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .team-grid { 
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.25rem 0.75rem;
+    }
+    .team-member { 
+        padding: 1.25rem 0.75rem 0.75rem 0.75rem;
+        min-height: 160px;
+        border-radius: 14px;
+    }
+    .team-photo {
+        width: 80px;
+        height: 80px;
+        margin-bottom: 0.75rem;
+    }
+    .team-photo-square {
+        width: 80px;
+        height: 80px;
+        border-radius: 50% !important;
+    }
+    .team-name {
+        font-size: 0.95rem;
+        margin-bottom: 0.15em;
+    }
+    .team-title {
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .team-section {
+        margin: 0 0.5rem 2.2rem 0.5rem;
+        padding: 1.25rem 0.75rem;
+    }
+    .team-grid { 
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem 0.5rem;
+    }
+    .team-member { 
+        padding: 1rem 0.5rem 0.75rem 0.5rem;
+        min-height: 150px;
+        border-radius: 12px;
+    }
+    .team-photo {
+        width: 70px;
+        height: 70px;
+        margin-bottom: 0.5rem;
+        border-width: 2px;
+    }
+    .team-photo-square {
+        width: 70px;
+        height: 70px;
+        border-radius: 50% !important;
+    }
+    .team-name {
+        font-size: 0.9rem;
+        line-height: 1.2;
+    }
+    .team-title {
+        font-size: 0.8rem;
+        line-height: 1.3;
+    }
+}
+
+@media (max-width: 360px) {
+    .team-grid { 
+        gap: 0.75rem 0.25rem;
+    }
+    .team-member { 
+        padding: 0.75rem 0.4rem 0.5rem 0.4rem;
+        min-height: 140px;
+    }
+    .team-photo {
+        width: 65px;
+        height: 65px;
+        margin-bottom: 0.4rem;
+    }
+    .team-photo-square {
+        width: 65px;
+        height: 65px;
+        border-radius: 50% !important;
+    }
+    .team-name {
+        font-size: 0.85rem;
+    }
+    .team-title {
+        font-size: 0.75rem;
+    }
+}
+</style>
+{% endblock %}

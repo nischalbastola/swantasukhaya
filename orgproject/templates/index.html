@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% block content %}
+<!-- Hero Section -->
+<section class="about-hero home-hero" style="padding: 3rem 0 2.5rem 0; min-height: 40vh;">
+    <div class="hero-background-image"></div>
+    <div class="container">
+        <div class="hero-content-box home-hero-content">
+            <p class="hero-subtitle home-subtitle">WELCOME</p>
+            <h1 class="home-main-title">Swantasukhaya Paropakar Pratishthan</h1>
+            <p class="home-hero-description">Empowering communities through compassionate service and meaningful change</p>
+        </div>
+    </div>
+</section>
+
+<div class="home-page" style="padding-top: 3rem;">
+    <!-- Other sections can be added here -->
+</div>
+
+<section class="programs-section" style="padding-top: 2rem; padding-bottom: 1.2rem;">
+    <!-- Programs section content -->
+</section>
+
+<section class="about-section" style="margin-bottom: 1.5rem; padding: 1.5rem 0;">
+    <!-- About section content -->
+</section>
+
+<style>
+/* Enhanced Home Hero Section */
+.home-hero {
+  position: relative;
+  overflow: hidden;
+}
+
+.home-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6));
+  z-index: 1;
+}
+
+.home-hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.home-subtitle {
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.home-main-title {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 1rem 0;
+  line-height: 1.2;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.home-hero-description {
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+  line-height: 1.5;
+  font-weight: 300;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Responsive Hero */
+@media (max-width: 768px) {
+  .home-hero {
+    padding: 2rem 0 2rem 0 !important;
+    min-height: 35vh !important;
+  }
+  
+  .home-subtitle {
+    font-size: 0.8rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .home-main-title {
+    font-size: 2.2rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .home-hero-description {
+    font-size: 1rem;
+    padding: 0 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .home-main-title {
+    font-size: 1.8rem;
+  }
+  
+  .home-hero-description {
+    font-size: 0.95rem;
+  }
+}
+</style>
+{% endblock %}

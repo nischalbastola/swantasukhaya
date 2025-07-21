@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="about-hero">
+    <div class="hero-background-image"></div>
+    <div class="container">
+        <div class="hero-content-box">
+            <p class="hero-subtitle">LEGAL</p>
+            <h1 style="text-align: center;">Privacy Policy</h1>
+        </div>
+    </div>
+</section>
+
+<section class="content-section">
+    <div class="container">
+        <div class="content-box">
+            <h2 style="text-align: center;">Privacy Policy</h2>
+            <p class="last-updated">Last updated: {{ now().strftime('%B %d, %Y') }}</p>
+
+            <div class="policy-section">
+                <h3 style="text-align: center;">Information We Collect</h3>
+                <p>We collect information that you provide directly to us, including:</p>
+                <ul>
+                    <li>Name and contact information when you fill out our contact form</li>
+                    <li>Messages and communications you send to us</li>
+                    <li>Information related to your use of our website</li>
+                </ul>
+            </div>
+
+            <div class="policy-section">
+                <h3 style="text-align: center;">How We Use Your Information</h3>
+                <p>We use the information we collect to:</p>
+                <ul>
+                    <li>Respond to your inquiries and provide customer service</li>
+                    <li>Send you updates about our school and programs</li>
+                    <li>Improve our website and services</li>
+                    <li>Comply with legal obligations</li>
+                </ul>
+            </div>
+
+            <div class="policy-section">
+                <h3 style="text-align: center;">Information Security</h3>
+                <p>We implement appropriate security measures to protect your personal information. However, no method of transmission over the Internet is 100% secure.</p>
+            </div>
+
+            <div class="policy-section">
+                <h3 style="text-align: center;">Contact Us</h3>
+                <p>If you have any questions about this Privacy Policy, please contact us through our contact page or at:</p>
+                <p class="contact-info">
+                    xyz school<br>
+                    123 School Lane<br>
+                    Kathmandu, Nepal<br>
+                    Email: info@xyzschool.com
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+.content-section {
+    padding: 4rem 0;
+    background: var(--color-background-light);
+}
+
+.content-box {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    background: var(--color-background-white);
+    border-radius: 8px;
+    box-shadow: 0 2px 16px rgba(26,34,51,0.07);
+}
+
+.content-box h2 {
+    color: var(--color-primary-dark);
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.last-updated {
+    color: var(--color-text-light);
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+}
+
+.policy-section {
+    margin-bottom: 2.5rem;
+}
+
+.policy-section h3 {
+    color: var(--color-primary-dark);
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+}
+
+.policy-section p {
+    color: var(--color-text-dark);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.policy-section ul {
+    list-style-type: disc;
+    margin-left: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.policy-section li {
+    color: var(--color-text-dark);
+    line-height: 1.6;
+    margin-bottom: 0.5rem;
+}
+
+.contact-info {
+    background: var(--color-background-light);
+    padding: 1.5rem;
+    border-radius: 6px;
+    margin-top: 1rem;
+}
+
+@media (max-width: 768px) {
+    .content-section {
+        padding: 2rem 1rem;
+    }
+    
+    .content-box {
+        padding: 1.5rem;
+    }
+    
+    .content-box h2 {
+        font-size: 1.8rem;
+    }
+    
+    .policy-section h3 {
+        font-size: 1.3rem;
+    }
+}
+</style>
+{% endblock %} 

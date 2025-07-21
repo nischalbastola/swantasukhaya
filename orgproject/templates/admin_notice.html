@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+
+{% block title %}Admin/Staff - Manage Work{% endblock %}
+
+{% block content %}
+<div class="content-section">
+    <div class="container">
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 1.2rem; margin-bottom: 2rem;">
+            <div style="flex:1; text-align:left;">
+                <a href="javascript:history.back()" class="back-to-list-link enhanced-back-btn" style="margin-bottom: 0; margin-left: 0; margin-top: 0;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 7px;"><path d="M15 18l-6-6 6-6"/></svg>
+                    Back
+                </a>
+            </div>
+            <div style="flex:2; text-align:center;">
+                <h1 style="margin: 0;">Manage Work</h1>
+            </div>
+            <div style="flex:1;"></div>
+        </div>
+        <div class="form-container" style="background: var(--color-background-light); border-radius: 14px; padding: 2rem; margin-bottom: 3rem; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
+            <h3>Add New Work</h3>
+            <form method="POST" enctype="multipart/form-data" id="work-form">
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label for="title" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Title</label>
+                    <input type="text" id="title" name="title" class="form-control" required style="width: 100%; padding: 0.8rem; border: 1px solid var(--color-border); border-radius: var(--border-radius);">
+                </div>
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label for="content" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Content</label>
+                    <textarea id="content" name="content" class="form-control" rows="4" required style="width: 100%; padding: 0.8rem; border: 1px solid var(--color-border); border-radius: var(--border-radius);"></textarea>
+                </div>
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label for="image" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Thumbnail Image (Required)</label>
+                    <input type="file" id="image" name="image" accept="image/*" required style="width: 100%; padding: 0.8rem; border: 1px solid var(--color-border); border-radius: var(--border-radius);">
+                </div>
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">File Attachments (Optional)</label>
+                    <div id="file-list"></div>
+                    <input type="file" id="file-input" style="display:none;">
+                    <button type="button" id="add-file-btn" style="margin-top: 0.5rem; background: #e9ecef; color: #28324b; border: none; border-radius: 6px; padding: 0.4rem 1.2rem; font-weight: 600; cursor: pointer;">Add File</button>
+                </div>
+                <button type="submit" class="btn btn-primary" style="background: var(--color-primary-dark); color: white; border: none; padding: 0.8rem 2rem; border-radius: var(--border-radius); cursor: pointer; font-weight: 600;">Publish</button>
+            </form>
+        </div>
+        <div class="existing-content-list">
+            <h3>All Work</h3>
+            <div class="work-list">
+                {% for work in works %}
+                <div class="work-card">
+                    <h4>{{ work.title }}</h4>
+                    <div class="work-date">Posted on: {{ work.created_at.strftime('%Y-%m-%d %H:%M') }}</div>
+                    <p>{{ work.content | truncate(200) }}</p>
+                    {% if work.file_names %}
+                        <div class="work-files">
+                        {% for fname in work.file_names.split(',') if fname %}
+                            {% set ext = fname.split('.')[-1].lower() %}
+                            {% if ext in ['png', 'jpg', 'jpeg', 'gif'] %}
+                                <a href="{{ url_for('static', filename='uploads/' ~ fname) }}" download>
+                                    <img src="{{ url_for('static', filename='uploads/' ~ fname) }}" alt="Work Image" style="max-width: 120px; max-height: 120px; border-radius: 8px; margin: 0.5em 1em 0.5em 0;">
+                                </a>
+                            {% else %}
+                                <a href="{{ url_for('static', filename='uploads/' ~ fname) }}" target="_blank" download style="display:inline-block; margin:0.2em 0.5em 0.2em 0; color: var(--color-primary-light); text-decoration: underline;">{{ fname }}</a>
+                            {% endif %}
+                        {% endfor %}
+                        </div>
+                    {% endif %}
+                    <div class="blog-admin-actions">
+                        {% if current_user.get_id() == 'admin' or (work.staff_id and work.staff_id == current_user.id) %}
+                            <a href="{{ url_for(current_user.get_id() == 'admin' and 'admin_edit_work' or 'staff_edit_work', work_id=work.id) }}" class="btn-admin-action btn-admin-secondary">Edit</a>
+                            <form action="{{ url_for(current_user.get_id() == 'admin' and 'delete_work' or 'staff_delete_work', work_id=work.id) }}" method="POST" class="delete-form">
+                                <button type="submit" class="btn-admin-action btn-admin-danger">Delete</button>
+                            </form>
+                        {% endif %}
+                    </div>
+                </div>
+                {% else %}
+                <div class="work-card" style="text-align: center;">
+                    <p>No work yet.</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+const fileInput = document.getElementById('file-input');
+const addFileBtn = document.getElementById('add-file-btn');
+const fileListDiv = document.getElementById('file-list');
+const noticeForm = document.getElementById('work-form');
+let filesToUpload = [];
+let fileInputCount = 0;
+addFileBtn.onclick = function() {
+    fileInput.value = '';
+    fileInput.click();
+};
+fileInput.onchange = function(e) {
+    if (fileInput.files.length > 0) {
+        const file = fileInput.files[0];
+        filesToUpload.push(file);
+        // Create a hidden file input for this file
+        const hiddenInput = document.createElement('input');
+        hiddenInput.type = 'file';
+        hiddenInput.name = 'files[]';
+        hiddenInput.style.display = 'none';
+        hiddenInput.id = 'hidden-file-' + fileInputCount;
+        // Use DataTransfer to set the file
+        const dt = new DataTransfer();
+        dt.items.add(file);
+        hiddenInput.files = dt.files;
+        noticeForm.appendChild(hiddenInput);
+        fileInputCount++;
+        renderFileList();
+    }
+};
+function renderFileList() {
+    fileListDiv.innerHTML = '';
+    filesToUpload.forEach((file, idx) => {
+        const fileDiv = document.createElement('div');
+        fileDiv.className = 'file-item';
+        fileDiv.innerHTML = `${file.name} <span class='file-remove' onclick='removeFile(${idx})' title='Remove'>&times;</span>`;
+        fileListDiv.appendChild(fileDiv);
+    });
+}
+window.removeFile = function(idx) {
+    // Remove the hidden input
+    const hiddenInputs = document.querySelectorAll('input[type="file"][name="files[]"]');
+    if (hiddenInputs[idx]) hiddenInputs[idx].remove();
+    filesToUpload.splice(idx, 1);
+    renderFileList();
+};
+</script>
+<style>
+.file-item { margin-bottom: 0.5em; display: flex; align-items: center; }
+.file-remove {
+    color: #d32f2f;
+    font-weight: bold;
+    font-size: 1.2em;
+    margin-left: 0.7em;
+    cursor: pointer;
+    user-select: none;
+    transition: color 0.2s;
+}
+.file-remove:hover { color: #a00; }
+</style>
+{% endblock %} 

@@ -1,0 +1,217 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Work{% endblock %}
+
+{% block content %}
+<div class="content-section">
+    <div class="container">
+        <div class="form-container" style="background: var(--color-background-light); border-radius: 14px; padding: 2rem; max-width: 800px; margin: auto; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
+    <h2>Edit Work</h2>
+            <form method="POST" action="" enctype="multipart/form-data" id="work-form">
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label for="title" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Work Title</label>
+                    <input type="text" id="title" name="title" class="form-control" value="{{ work.title }}" required style="width: 100%; padding: 0.8rem; border: 1px solid var(--color-border); border-radius: var(--border-radius); box-sizing: border-box;">
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label for="content" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Work Content</label>
+                    <textarea id="content" name="content" class="form-control" rows="10" required style="width: 100%; padding: 0.8rem; border: 1px solid var(--color-border); border-radius: var(--border-radius); box-sizing: border-box;">{{ work.content }}</textarea>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Thumbnail Image</label>
+        {% if work.image_filename %}
+        <div style="margin-bottom: 1em;">
+            <strong>Current Thumbnail:</strong>
+                        <div class="current-file-display" style="display: flex; align-items: center; justify-content: space-between; background: #e9ecef; padding: 0.5rem 1rem; border-radius: var(--border-radius); margin: 0.5rem 0;">
+                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                <img src="{{ url_for('static', filename='uploads/' + work.image_filename) }}" alt="Work Thumbnail" style="max-width: 100px; max-height: 100px; border-radius: 6px; object-fit: cover;">
+                                <span>{{ work.image_filename }}</span>
+                            </div>
+                            <label class="remove-file-btn" style="color: #d32f2f; font-weight: bold; font-size: 1.3em; cursor: pointer; user-select: none;">
+                    <input type="checkbox" name="remove_image" style="display:none;">
+                    <span title="Remove thumbnail">&times;</span>
+                </label>
+            </div>
+        </div>
+        {% endif %}
+                    <input type="file" id="image" name="image" accept="image/*" class="form-control-file" style="width: 100%; padding: 0.5rem; border: 1px solid var(--color-border); border-radius: var(--border-radius); box-sizing: border-box;">
+        </div>
+        
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">File Attachments</label>
+        {% if work.file_names %}
+        <div style="margin-bottom: 1em;">
+            <strong>Current Files:</strong>
+                        <ul style="list-style: none; padding-left: 0; margin-top: 0.5rem;">
+            {% for fname in work.file_names.split(',') if fname %}
+                            <li style="margin-bottom: 0.5em; display: flex; align-items: center; background: #f8f9fa; padding: 0.5rem; border-radius: 6px;" class="file-li">
+                                <a href="{{ url_for('static', filename='uploads/' ~ fname) }}" target="_blank" style="flex: 1; text-decoration: none; color: var(--color-primary-dark);">{{ fname }}</a>
+                    <label style="margin-left: 1em; color: #d32f2f; font-weight: normal; cursor: pointer; font-size: 1.3em;">
+                        <input type="checkbox" name="remove_files" value="{{ fname }}" style="display:none;">
+                        <span class="file-remove-x" title="Remove" onclick="removeWorkFile(this)">&times;</span>
+                    </label>
+                </li>
+            {% endfor %}
+            </ul>
+            <div id="removed-files-bin" style="display:none;"></div>
+        </div>
+        {% endif %}
+        <div id="file-list"></div>
+        <input type="file" id="file-input" style="display:none;">
+                    <button type="button" id="add-file-btn" style="margin-top: 0.5rem; background: #e9ecef; color: #28324b; border: none; border-radius: 6px; padding: 0.4rem 1.2rem; font-weight: 600; cursor: pointer; transition: background-color 0.2s;">Add File</button>
+                </div>
+
+                <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                    <button type="submit" class="btn btn-primary" style="background: var(--color-primary-dark); color: white; border: none; padding: 0.8rem 2rem; border-radius: var(--border-radius); cursor: pointer; font-weight: 600; transition: background-color 0.2s;">Update Work</button>
+                    <a href="{{ url_for('admin_work') if current_user.get_id() == 'admin' else url_for('staff_work') }}" class="btn btn-secondary" style="background: var(--color-background-light); color: var(--color-text-dark); border: 1px solid var(--color-border); padding: 0.8rem 2rem; border-radius: var(--border-radius); text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; transition: background-color 0.2s;">Cancel</a>
+                </div>
+    </form>
+        </div>
+    </div>
+</div>
+
+<script>
+const fileInput = document.getElementById('file-input');
+const addFileBtn = document.getElementById('add-file-btn');
+const fileListDiv = document.getElementById('file-list');
+const workForm = document.getElementById('work-form');
+let filesToUpload = [];
+let fileInputCount = 0;
+
+addFileBtn.onclick = function() {
+    fileInput.value = '';
+    fileInput.click();
+};
+
+fileInput.onchange = function(e) {
+    if (fileInput.files.length > 0) {
+        const file = fileInput.files[0];
+        filesToUpload.push(file);
+        // Create a hidden file input for this file
+        const hiddenInput = document.createElement('input');
+        hiddenInput.type = 'file';
+        hiddenInput.name = 'files[]';
+        hiddenInput.style.display = 'none';
+        hiddenInput.id = 'hidden-file-' + fileInputCount;
+        // Use DataTransfer to set the file
+        const dt = new DataTransfer();
+        dt.items.add(file);
+        hiddenInput.files = dt.files;
+        workForm.appendChild(hiddenInput);
+        fileInputCount++;
+        renderFileList();
+    }
+};
+
+function renderFileList() {
+    fileListDiv.innerHTML = '';
+    filesToUpload.forEach((file, idx) => {
+        const fileDiv = document.createElement('div');
+        fileDiv.className = 'file-item';
+        fileDiv.style.cssText = 'margin-bottom: 0.5em; display: flex; align-items: center; background: #f8f9fa; padding: 0.5rem; border-radius: 6px;';
+        fileDiv.innerHTML = `<span style="flex: 1;">${file.name}</span><span class='file-remove' onclick='removeFile(${idx})' title='Remove' style="color: #d32f2f; font-weight: bold; font-size: 1.3em; margin-left: 0.7em; cursor: pointer; user-select: none;">&times;</span>`;
+        fileListDiv.appendChild(fileDiv);
+    });
+}
+
+window.removeFile = function(idx) {
+    // Remove the hidden input
+    const hiddenInputs = document.querySelectorAll('input[type="file"][name="files[]"]');
+    if (hiddenInputs[idx]) hiddenInputs[idx].remove();
+    filesToUpload.splice(idx, 1);
+    renderFileList();
+};
+
+function removeWorkFile(span) {
+    const checkbox = span.previousElementSibling;
+    checkbox.checked = true;
+    // Move checkbox to hidden bin so it is always submitted
+    document.getElementById('removed-files-bin').appendChild(checkbox);
+    // Hide the li with fade effect
+    const li = span.closest('li');
+    li.style.opacity = '0.5';
+    li.style.textDecoration = 'line-through';
+}
+
+// Add hover effects
+document.addEventListener('DOMContentLoaded', function() {
+    const addBtn = document.getElementById('add-file-btn');
+    addBtn.addEventListener('mouseenter', function() {
+        this.style.backgroundColor = '#d1ecf1';
+    });
+    addBtn.addEventListener('mouseleave', function() {
+        this.style.backgroundColor = '#e9ecef';
+    });
+    
+    const submitBtn = document.querySelector('button[type="submit"]');
+    submitBtn.addEventListener('mouseenter', function() {
+        this.style.backgroundColor = '#0a1f35';
+    });
+    submitBtn.addEventListener('mouseleave', function() {
+        this.style.backgroundColor = 'var(--color-primary-dark)';
+    });
+    
+    const cancelBtn = document.querySelector('.btn-secondary');
+    cancelBtn.addEventListener('mouseenter', function() {
+        this.style.backgroundColor = '#e2e6ea';
+    });
+    cancelBtn.addEventListener('mouseleave', function() {
+        this.style.backgroundColor = 'var(--color-background-light)';
+    });
+});
+</script>
+
+<style>
+.file-remove, .file-remove-x {
+    color: #d32f2f;
+    font-weight: bold;
+    font-size: 1.3em;
+    margin-left: 0.7em;
+    cursor: pointer;
+    user-select: none;
+    transition: color 0.2s;
+}
+
+.file-remove:hover, .file-remove-x:hover { 
+    color: #a00; 
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--color-primary-light);
+    box-shadow: 0 0 0 3px rgba(74, 111, 165, 0.1);
+}
+
+.remove-file-btn:hover span {
+    color: #a00;
+}
+
+.file-li.to-remove { 
+    opacity: 0.5; 
+    text-decoration: line-through; 
+}
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+    .form-container {
+        padding: 1.5rem !important;
+        margin: 1rem !important;
+    }
+    
+    .form-group {
+        margin-bottom: 1rem !important;
+    }
+    
+    .btn {
+        padding: 0.7rem 1.5rem !important;
+        font-size: 0.9rem;
+    }
+    
+    .current-file-display img {
+        max-width: 80px !important;
+        max-height: 80px !important;
+    }
+}
+</style>
+{% endblock %} 

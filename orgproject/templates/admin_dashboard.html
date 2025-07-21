@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="admin-dashboard fade-in">
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 1.2rem; margin-bottom: 1.2rem;">
+        <div style="flex:1; text-align:left;">
+            <a href="javascript:history.back()" class="back-to-list-link enhanced-back-btn" style="margin-bottom: 0; margin-left: 0; margin-top: 0;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 7px;"><path d="M15 18l-6-6 6-6"/></svg>
+                Back
+            </a>
+        </div>
+        <div style="flex:2; text-align:center;">
+            <h1 style="margin:0;">Welcome, Mr. Pokhrel</h1>
+            <p style="margin:0; color:#6c757d; font-size:1.1rem;">Access and manage all aspects of the school website from your admin dashboard.</p>
+        </div>
+        <div style="flex:1;"></div>
+    </div>
+    <div class="dashboard-content">
+        <h2>Quick Actions</h2>
+        <div class="dashboard-actions">
+            <a href="{{ url_for('admin_messages') }}" class="btn-main">See Messages</a>
+            <a href="{{ url_for('admin_work') }}" class="btn-main">Add Work</a>
+            <a href="{{ url_for('admin_blogs') }}" class="btn-main">Manage Blogs</a>
+            <a href="{{ url_for('admin_staff') }}" class="btn-main">Manage Staff Accounts</a>
+        </div>
+    </div>
+</section>
+
+<style>
+.admin-dashboard {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.welcome-section {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 2rem;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.welcome-section h1 {
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+    font-size: 2rem;
+}
+
+.welcome-section p {
+    color: #6c757d;
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+.dashboard-content {
+    background: #ffffff;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.dashboard-content h2 {
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+}
+
+.dashboard-actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.btn-main {
+    text-align: center;
+    padding: 1rem;
+    border-radius: 8px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    background: #fff;
+    color: #181d26;
+}
+
+.btn-main:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    background: #fff !important;
+    color: #181d26 !important;
+}
+</style>
+{% endblock %} 

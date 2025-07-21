@@ -1,0 +1,646 @@
+{% extends "base.html" %}
+{% block title %}{{ program.title }} - xyz organization{% endblock %}
+
+{% block content %}
+<div class="program-detail-container">
+    <div class="container">
+        <!-- Back Button -->
+        <div class="program-detail-navigation">
+            <a href="{{ url_for('initiatives') }}" class="back-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5"/>
+                    <path d="M12 19l-7-7 7-7"/>
+                </svg>
+                <span>Back to Programs</span>
+            </a>
+        </div>
+
+        <!-- Program Detail Card -->
+        <div class="program-detail-card" data-bg="{{ url_for('static', filename=program.bg) }}">
+            <div class="program-detail-overlay"></div>
+            <div class="program-detail-header-content">
+                <div class="program-detail-icon">
+                    {% if program.id == 'funeral' %}
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2L12 22"/>
+                            <path d="M8 6L16 6"/>
+                            <path d="M8 18L16 18"/>
+                            <path d="M4 10L20 10"/>
+                            <path d="M4 14L20 14"/>
+                        </svg>
+                    {% elif program.id == 'education-centers' %}
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 21L21 21"/>
+                            <path d="M5 21L5 7L19 7L19 21"/>
+                            <path d="M9 9L9 13"/>
+                            <path d="M15 9L15 13"/>
+                            <path d="M12 2L5 7L19 7L12 2Z"/>
+                        </svg>
+                    {% elif program.id == 'free-education' %}
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                            <path d="M6.5 2H20V22H6.5A2.5 2.5 0 0 1 4 19.5V4.5A2.5 2.5 0 0 1 6.5 2Z"/>
+                            <path d="M8 7H16"/>
+                            <path d="M8 11H16"/>
+                        </svg>
+                    {% elif program.id == 'uniform' %}
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M6 2L18 2"/>
+                            <path d="M6 6L12 4L18 6"/>
+                            <path d="M6 6L6 20L18 20L18 6"/>
+                            <path d="M10 10L14 10"/>
+                            <path d="M10 14L14 14"/>
+                        </svg>
+                    {% elif program.id == 'eye-camp' %}
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M1 12S5 4 12 4s11 8 11 8-4 8-11 8S1 12 1 12Z"/>
+                            <circle cx="12" cy="12" r="3"/>
+                        </svg>
+                    {% elif program.id == 'stationery' %}
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M17 3A2.83 2.83 0 1 1 21 7L12.5 15.5L8 21L2 15L8.5 9.5L17 1Z"/>
+                            <path d="M15 5L19 9"/>
+                        </svg>
+                    {% elif program.id == 'motivation' %}
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M8 14S9.5 16 12 16S16 14 16 14"/>
+                            <line x1="9" y1="9" x2="9.01" y2="9"/>
+                            <line x1="15" y1="9" x2="15.01" y2="9"/>
+                        </svg>
+                    {% elif program.id == 'fund' %}
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="12" y1="1" x2="12" y2="23"/>
+                            <path d="M17 5H9.5A3.5 3.5 0 0 0 9.5 12H17"/>
+                            <path d="M6 12H17.5A3.5 3.5 0 0 1 17.5 19H6"/>
+                        </svg>
+                    {% elif program.id == 'collaboration' %}
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M16 21V19A4 4 0 0 0 12 15H5A4 4 0 0 0 1 19V21"/>
+                            <circle cx="8.5" cy="7" r="4"/>
+                            <path d="M23 21V19A4 4 0 0 0 19 15"/>
+                            <path d="M16 3.13A4 4 0 0 1 16 11"/>
+                        </svg>
+                    {% elif program.id == 'hope' %}
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20.84 4.61A5.5 5.5 0 0 0 16 2A5.5 5.5 0 0 0 12 4A5.5 5.5 0 0 0 8 2A5.5 5.5 0 0 0 3.16 4.61C1.84 5.95 1.84 8.05 3.16 9.39L12 18.83L20.84 9.39C22.16 8.05 22.16 5.95 20.84 4.61Z"/>
+                        </svg>
+                    {% elif program.id == 'awareness' %}
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12C11 9 9 7 9 7S7 9 7 12A2.5 2.5 0 0 0 9.5 14.5Z"/>
+                            <path d="M12 2L13 7L11 7L12 2Z"/>
+                            <path d="M17 7L15.5 10L13.5 9L17 7Z"/>
+                            <path d="M19 14L16 12.5L17 10.5L19 14Z"/>
+                            <path d="M17 19L15.5 16L17.5 15L17 19Z"/>
+                            <path d="M12 22L13 17L11 17L12 22Z"/>
+                            <path d="M7 19L8.5 16L6.5 15L7 19Z"/>
+                            <path d="M5 14L8 12.5L7 10.5L5 14Z"/>
+                            <path d="M7 7L8.5 10L10.5 9L7 7Z"/>
+                        </svg>
+                    {% endif %}
+                </div>
+                <h1 class="program-detail-title">{{ program.title }}</h1>
+            </div>
+            
+            <div class="program-detail-content">
+                <div class="program-detail-section">
+                    <h2>What We Do</h2>
+                    <p>{{ program.desc }}</p>
+                </div>
+
+                <div class="program-detail-section">
+                    <h2>How We Help</h2>
+                    <div class="program-help-points">
+                        {% if program.id == 'funeral' %}
+                            <div class="help-point">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="12" y1="1" x2="12" y2="23"/>
+                                    <path d="M17 5H9.5A3.5 3.5 0 0 0 9.5 12H17"/>
+                                    <path d="M6 12H17.5A3.5 3.5 0 0 1 17.5 19H6"/>
+                                </svg>
+                                Financial assistance for funeral expenses
+                            </div>
+                            <div class="help-point">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M16 21V19A4 4 0 0 0 12 15H5A4 4 0 0 0 1 19V21"/>
+                                    <circle cx="8.5" cy="7" r="4"/>
+                                    <path d="M23 21V19A4 4 0 0 0 19 15"/>
+                                    <path d="M16 3.13A4 4 0 0 1 16 11"/>
+                                </svg>
+                                Support during difficult times
+                            </div>
+                            <div class="help-point">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 2L12 22"/>
+                                    <path d="M8 6L16 6"/>
+                                    <path d="M8 18L16 18"/>
+                                    <path d="M4 10L20 10"/>
+                                    <path d="M4 14L20 14"/>
+                                </svg>
+                                Ensuring dignified ceremonies
+                            </div>
+                        {% elif program.id == 'education-centers' %}
+                            <div class="help-point">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M3 21L21 21"/>
+                                    <path d="M5 21L5 7L19 7L19 21"/>
+                                    <path d="M9 9L9 13"/>
+                                    <path d="M15 9L15 13"/>
+                                    <path d="M12 2L5 7L19 7L12 2Z"/>
+                                </svg>
+                                Setting up learning facilities
+                            </div>
+                            <div class="help-point">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="3"/>
+                                    <path d="M12 1V9"/>
+                                    <path d="M21 12H13"/>
+                                    <path d="M12 23V15"/>
+                                    <path d="M3 12H11"/>
+                                </svg>
+                                Training local teachers
+                            </div>
+                            <div class="help-point">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                                    <path d="M6.5 2H20V22H6.5A2.5 2.5 0 0 1 4 19.5V4.5A2.5 2.5 0 0 1 6.5 2Z"/>
+                                    <path d="M8 7H16"/>
+                                    <path d="M8 11H16"/>
+                                </svg>
+                                Providing educational materials
+                            </div>
+                        {% elif program.id == 'free-education' %}
+                            <div class="help-point">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                                    <path d="M6.5 2H20V22H6.5A2.5 2.5 0 0 1 4 19.5V4.5A2.5 2.5 0 0 1 6.5 2Z"/>
+                                    <path d="M8 7H16"/>
+                                    <path d="M8 11H16"/>
+                                </svg>
+                                Free textbooks and materials
+                            </div>
+                            <div class="help-point">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="3"/>
+                                    <path d="M12 1V9"/>
+                                    <path d="M21 12H13"/>
+                                    <path d="M12 23V15"/>
+                                    <path d="M3 12H11"/>
+                                </svg>
+                                Qualified tutoring support
+                            </div>
+                            <div class="help-point">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="M9.09 9A3 3 0 0 1 17 6.31A3 3 0 0 1 15.91 9A3 3 0 0 1 12 12.44A3 3 0 0 1 9.09 9Z"/>
+                                </svg>
+                                Educational guidance and counseling
+                            </div>
+                        {% elif program.id == 'uniform' %}
+                            <div class="help-point">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M6 2L18 2"/>
+                                    <path d="M6 6L12 4L18 6"/>
+                                    <path d="M6 6L6 20L18 20L18 6"/>
+                                    <path d="M10 10L14 10"/>
+                                    <path d="M10 14L14 14"/>
+                                </svg>
+                                School uniforms and clothing
+                            </div>
+                            <div class="help-point">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M6 2L14 2"/>
+                                    <path d="M6 6L14 6"/>
+                                    <path d="M6 10L14 10"/>
+                                    <path d="M6 14L14 14"/>
+                                    <path d="M6 18L14 18"/>
+                                    <path d="M6 22L14 22"/>
+                                </svg>
+                                School bags and supplies
+                            </div>
+                            <div class="help-point">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M2 18H22"/>
+                                    <path d="M10 14L12 16L14 14"/>
+                                    <path d="M10 14V6A4 4 0 0 1 18 6V14"/>
+                                    <path d="M6 14V6A4 4 0 0 1 14 6V14"/>
+                                </svg>
+                                Shoes and other necessities
+                            </div>
+                        {% elif program.id == 'eye-camp' %}
+                            <div class="help-point">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M1 12S5 4 12 4s11 8 11 8-4 8-11 8S1 12 1 12Z"/>
+                                    <circle cx="12" cy="12" r="3"/>
+                                </svg>
+                                Free eye examinations
+                            </div>
+                            <div class="help-point">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="6" cy="15" r="4"/>
+                                    <circle cx="18" cy="15" r="4"/>
+                                    <path d="M14 15A2 2 0 0 0 16 13V7A4 4 0 0 0 8 7V13A2 2 0 0 0 10 15"/>
+                                </svg>
+                                Prescription glasses
+                            </div>
+                            <div class="help-point">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M19 14C19.5523 14 20 13.5523 20 13S19.5523 12 19 12 18 12.4477 18 13 18.4477 14 19 14Z"/>
+                                    <path d="M5 14C5.55228 14 6 13.5523 6 13S5.55228 12 5 12 4 12.4477 4 13 4.4477 14 5 14Z"/>
+                                    <path d="M2 3L22 21"/>
+                                    <path d="M9 5H13A6 6 0 0 1 19 11V13"/>
+                                    <path d="M5 13V11A6 6 0 0 1 11 5"/>
+                                </svg>
+                                Cataract surgery arrangements
+                            </div>
+                        {% elif program.id == 'stationery' %}
+                            <div class="help-point">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M17 3A2.83 2.83 0 1 1 21 7L12.5 15.5L8 21L2 15L8.5 9.5L17 1Z"/>
+                                    <path d="M15 5L19 9"/>
+                                </svg>
+                                Pens, pencils, and erasers
+                            </div>
+                            <div class="help-point">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                                    <path d="M6.5 2H20V22H6.5A2.5 2.5 0 0 1 4 19.5V4.5A2.5 2.5 0 0 1 6.5 2Z"/>
+                                    <path d="M8 7H16"/>
+                                    <path d="M8 11H16"/>
+                                </svg>
+                                Notebooks and paper
+                            </div>
+                            <div class="help-point">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="3"/>
+                                    <path d="M12 1V9"/>
+                                    <path d="M21 12H13"/>
+                                    <path d="M12 23V15"/>
+                                    <path d="M3 12H11"/>
+                                </svg>
+                                School supplies and equipment
+                            </div>
+                        {% elif program.id == 'motivation' %}
+                            <div class="help-point">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="M8 14S9.5 16 12 16S16 14 16 14"/>
+                                    <line x1="9" y1="9" x2="9.01" y2="9"/>
+                                    <line x1="15" y1="9" x2="15.01" y2="9"/>
+                                </svg>
+                                Motivational workshops
+                            </div>
+                            <div class="help-point">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M6 2L18 6L18 18L6 14V2Z"/>
+                                    <path d="M6 8L10 10"/>
+                                    <path d="M6 12L10 14"/>
+                                </svg>
+                                Confidence building sessions
+                            </div>
+                            <div class="help-point">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/>
+                                </svg>
+                                Leadership development programs
+                            </div>
+                        {% elif program.id == 'fund' %}
+                            <div class="help-point">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                                    <line x1="8" y1="21" x2="16" y2="21"/>
+                                    <line x1="12" y1="17" x2="12" y2="21"/>
+                                </svg>
+                                Transparent fund management
+                            </div>
+                            <div class="help-point">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="18" y1="20" x2="18" y2="10"/>
+                                    <line x1="12" y1="20" x2="12" y2="4"/>
+                                    <line x1="6" y1="20" x2="6" y2="14"/>
+                                </svg>
+                                Regular financial reporting
+                            </div>
+                            <div class="help-point">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="M8 14S9.5 16 12 16S16 14 16 14"/>
+                                    <line x1="9" y1="9" x2="9.01" y2="9"/>
+                                    <line x1="15" y1="9" x2="15.01" y2="9"/>
+                                </svg>
+                                Targeted assistance programs
+                            </div>
+                        {% elif program.id == 'collaboration' %}
+                            <div class="help-point">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M16 21V19A4 4 0 0 0 12 15H5A4 4 0 0 0 1 19V21"/>
+                                    <circle cx="8.5" cy="7" r="4"/>
+                                    <path d="M23 21V19A4 4 0 0 0 19 15"/>
+                                    <path d="M16 3.13A4 4 0 0 1 16 11"/>
+                                </svg>
+                                Partnership development
+                            </div>
+                            <div class="help-point">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <line x1="2" y1="12" x2="22" y2="12"/>
+                                    <path d="M12 2A15.3 15.3 0 0 1 4 7"/>
+                                    <path d="M12 2A15.3 15.3 0 0 0 20 7"/>
+                                    <path d="M12 22A15.3 15.3 0 0 1 4 17"/>
+                                    <path d="M12 22A15.3 15.3 0 0 0 20 17"/>
+                                </svg>
+                                Network building
+                            </div>
+                            <div class="help-point">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/>
+                                </svg>
+                                Impact amplification
+                            </div>
+                        {% elif program.id == 'hope' %}
+                            <div class="help-point">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/>
+                                </svg>
+                                Empowerment workshops
+                            </div>
+                            <div class="help-point">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M20.84 4.61A5.5 5.5 0 0 0 16 2A5.5 5.5 0 0 0 12 4A5.5 5.5 0 0 0 8 2A5.5 5.5 0 0 0 3.16 4.61C1.84 5.95 1.84 8.05 3.16 9.39L12 18.83L20.84 9.39C22.16 8.05 22.16 5.95 20.84 4.61Z"/>
+                                </svg>
+                                Emotional support
+                            </div>
+                            <div class="help-point">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M7 13L10 16L17 9"/>
+                                    <circle cx="12" cy="12" r="9"/>
+                                </svg>
+                                Personal development
+                            </div>
+                        {% elif program.id == 'awareness' %}
+                            <div class="help-point">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12C11 9 9 7 9 7S7 9 7 12A2.5 2.5 0 0 0 9.5 14.5Z"/>
+                                    <path d="M12 2L13 7L11 7L12 2Z"/>
+                                    <path d="M17 7L15.5 10L13.5 9L17 7Z"/>
+                                    <path d="M19 14L16 12.5L17 10.5L19 14Z"/>
+                                    <path d="M17 19L15.5 16L17.5 15L17 19Z"/>
+                                    <path d="M12 22L13 17L11 17L12 22Z"/>
+                                    <path d="M7 19L8.5 16L6.5 15L7 19Z"/>
+                                    <path d="M5 14L8 12.5L7 10.5L5 14Z"/>
+                                    <path d="M7 7L8.5 10L10.5 9L7 7Z"/>
+                                </svg>
+                                Community awareness campaigns
+                            </div>
+                            <div class="help-point">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                                    <path d="M6.5 2H20V22H6.5A2.5 2.5 0 0 1 4 19.5V4.5A2.5 2.5 0 0 1 6.5 2Z"/>
+                                    <path d="M8 7H16"/>
+                                    <path d="M8 11H16"/>
+                                </svg>
+                                Educational materials
+                            </div>
+                            <div class="help-point">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 1L9 9L1 9L7.5 14L5 22L12 17L19 22L16.5 14L23 9L15 9L12 1Z"/>
+                                </svg>
+                                Public speaking events
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="program-detail-section">
+                    <h2>Get Involved</h2>
+                    <p>Want to support this program? You can help by volunteering, donating, or spreading awareness about our cause.</p>
+                    <a href="{{ url_for('contact') }}" class="contact-program-btn">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.program-detail-container {
+    min-height: 100vh;
+    padding: 1rem 0;
+    background: var(--color-background-light);
+}
+
+.program-detail-navigation {
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0.5rem 0;
+}
+
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #181d26;
+    text-decoration: none;
+    font-size: 0.98rem;
+    font-weight: 600;
+    transition: color 0.2s ease, transform 0.2s ease;
+    font-family: var(--font-sans);
+    background: none;
+    border: none;
+    padding: 0.25rem 0.5rem;
+    border-radius: 6px;
+}
+
+.back-btn:hover {
+    color: #28324b;
+}
+
+.back-btn svg {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.3s ease;
+}
+
+.back-btn:hover svg {
+    transform: translateX(-3px);
+}
+
+.program-detail-card {
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    color: white;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 6px 32px rgba(26,34,51,0.13);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 400px;
+}
+
+.program-detail-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.program-detail-header-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.program-detail-icon {
+    color: white;
+    margin-bottom: 1rem;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+}
+
+.program-detail-icon svg {
+    width: 48px;
+    height: 48px;
+    stroke: white;
+}
+
+.program-detail-title {
+    font-family: var(--font-serif);
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+    margin: 0;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    color: white;
+}
+
+.program-detail-content {
+    position: relative;
+    z-index: 1;
+}
+
+.program-detail-section {
+    margin-bottom: 2rem;
+}
+
+.program-detail-section h2 {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    color: white;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+
+.program-detail-section p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.program-help-points {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.help-point {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.8rem 1rem;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    font-size: 1rem;
+    backdrop-filter: blur(10px);
+}
+
+.help-point svg {
+    width: 20px;
+    height: 20px;
+    stroke: white;
+    flex-shrink: 0;
+}
+
+.contact-program-btn {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 0.8rem 2rem;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.contact-program-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+    color: white;
+}
+
+@media (max-width: 768px) {
+    .program-detail-container {
+        padding: 0.5rem 0;
+    }
+    
+    .program-detail-navigation {
+        margin-bottom: 1rem;
+        padding: 0.5rem 1rem;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 8px;
+        margin: 0 1rem 1rem 1rem;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    
+    .back-btn {
+        font-size: 0.95rem;
+        padding: 0.4rem 0.8rem;
+        color: #0d2c4f;
+        font-weight: 700;
+    }
+    
+    .back-btn:hover {
+        color: #1a3a5c;
+        background: rgba(13, 44, 79, 0.05);
+    }
+    
+    .program-detail-card {
+        padding: 1.5rem;
+        margin: 0 1rem;
+        border-radius: 12px;
+    }
+    
+    .program-detail-header-content {
+        text-align: center;
+        margin-bottom: 1.5rem;
+    }
+    
+    .program-detail-title {
+        font-size: 1.6rem;
+        text-align: center;
+    }
+    
+    .program-detail-icon {
+        text-align: center;
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Set background image for program detail card
+    const detailCard = document.querySelector('.program-detail-card[data-bg]');
+    if (detailCard) {
+        const bg = detailCard.getAttribute('data-bg');
+        if (bg) {
+            detailCard.style.backgroundImage = 'url(' + bg + ')';
+        }
+    }
+});
+</script>
+{% endblock %} 

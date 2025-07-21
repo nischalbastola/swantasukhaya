@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Blog Post{% endblock %}
+
+{% block content %}
+<div class="content-section">
+    <div class="container">
+        <div class="form-container" style="background: var(--color-background-light); border-radius: 14px; padding: 2rem; max-width: 800px; margin: auto; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
+            <h2>Edit Blog Post</h2>
+            <form method="POST" action="" enctype="multipart/form-data">
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label for="title" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Title</label>
+                    <input type="text" id="title" name="title" class="form-control" value="{{ post.title }}" required style="width: 100%; padding: 0.8rem; border: 1px solid var(--color-border); border-radius: var(--border-radius);">
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label for="author" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Author Name</label>
+                    <input type="text" id="author" name="author" class="form-control" value="{{ post.author_name }}" required style="width: 100%; padding: 0.8rem; border: 1px solid var(--color-border); border-radius: var(--border-radius);">
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label for="content" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Content</label>
+                    <textarea id="content" name="content" class="form-control" rows="10" required style="width: 100%; padding: 0.8rem; border: 1px solid var(--color-border); border-radius: var(--border-radius);">{{ post.content }}</textarea>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Feature Image</label>
+                    {% if post.image_filename %}
+                    <div class="current-file-display" id="current-image-container">
+                        <span>{{ post.image_filename }}</span>
+                        <button type="button" class="remove-file-btn" data-target="image" aria-label="Remove image">&times;</button>
+                    </div>
+                    {% endif %}
+                    <input type="file" id="image" name="image" class="form-control-file" style="width: 100%; padding: 0.5rem; border: 1px solid var(--color-border); border-radius: var(--border-radius);">
+                    <input type="checkbox" name="remove_image" id="remove_image_checkbox" style="display:none;">
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">File Attachments</label>
+                    {% if post.file_attachment %}
+                    <div style="margin-bottom: 1em;">
+                        <strong>Current Files:</strong>
+                        <ul style="list-style: none; padding-left: 0;">
+                        {% for fname in post.file_attachment.split(',') if fname %}
+                            <li style="margin-bottom: 0.5em; display: flex; align-items: center;">
+                                <a href="{{ url_for('static', filename='uploads/' ~ fname) }}" target="_blank">{{ fname }}</a>
+                                <label style="margin-left: 1em; color: #d32f2f; font-weight: normal; cursor: pointer; font-size: 1.3em;">
+                                    <input type="checkbox" name="remove_files" value="{{ fname }}" style="display:none;">
+                                    <span class="file-remove-x" title="Remove" onclick="this.previousElementSibling.checked = !this.previousElementSibling.checked; this.closest('li').style.display = this.previousElementSibling.checked ? 'none' : '';">&times;</span>
+                                </label>
+                            </li>
+                        {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+                    <div id="file-list"></div>
+                    <input type="file" id="file-input" style="display:none;">
+                    <button type="button" id="add-file-btn" style="margin-top: 0.5rem; background: #e9ecef; color: #28324b; border: none; border-radius: 6px; padding: 0.4rem 1.2rem; font-weight: 600; cursor: pointer;">Add File</button>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="background: var(--color-primary-dark); color: white; border: none; padding: 0.8rem 2rem; border-radius: var(--border-radius); cursor: pointer; font-weight: 600;">Save Changes</button>
+                <a href="{{ url_for('admin_blogs') if current_user.get_id() == 'admin' else url_for('staff_blogs') }}" class="btn btn-secondary" style="background: var(--color-background-light); color: var(--color-text-dark); border: 1px solid var(--color-border); padding: 0.8rem 2rem; border-radius: var(--border-radius); text-decoration: none; font-weight: 600;">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+const fileInput = document.getElementById('file-input');
+const addFileBtn = document.getElementById('add-file-btn');
+const fileListDiv = document.getElementById('file-list');
+const blogForm = document.querySelector('form[method="POST"][enctype="multipart/form-data"]');
+let filesToUpload = [];
+let fileInputCount = 0;
+addFileBtn.onclick = function() {
+    fileInput.value = '';
+    fileInput.click();
+};
+fileInput.onchange = function(e) {
+    if (fileInput.files.length > 0) {
+        const file = fileInput.files[0];
+        filesToUpload.push(file);
+        // Create a hidden file input for this file
+        const hiddenInput = document.createElement('input');
+        hiddenInput.type = 'file';
+        hiddenInput.name = 'files[]';
+        hiddenInput.style.display = 'none';
+        hiddenInput.id = 'hidden-file-' + fileInputCount;
+        // Use DataTransfer to set the file
+        const dt = new DataTransfer();
+        dt.items.add(file);
+        hiddenInput.files = dt.files;
+        blogForm.appendChild(hiddenInput);
+        fileInputCount++;
+        renderFileList();
+    }
+};
+function renderFileList() {
+    fileListDiv.innerHTML = '';
+    filesToUpload.forEach((file, idx) => {
+        const fileDiv = document.createElement('div');
+        fileDiv.className = 'file-item';
+        fileDiv.innerHTML = `${file.name} <span class='file-remove' onclick='removeFile(${idx})' title='Remove'>&times;</span>`;
+        fileListDiv.appendChild(fileDiv);
+    });
+}
+window.removeFile = function(idx) {
+    // Remove the hidden input
+    const hiddenInputs = document.querySelectorAll('input[type="file"][name="files[]"]');
+    if (hiddenInputs[idx]) hiddenInputs[idx].remove();
+    filesToUpload.splice(idx, 1);
+    renderFileList();
+};
+</script>
+
+<style>
+.file-item { margin-bottom: 0.5em; display: flex; align-items: center; }
+.file-remove, .file-remove-x {
+    color: #d32f2f;
+    font-weight: bold;
+    font-size: 1.3em;
+    margin-left: 0.7em;
+    cursor: pointer;
+    user-select: none;
+    transition: color 0.2s;
+}
+.file-remove:hover, .file-remove-x:hover { color: #a00; }
+</style>
+{% endblock %} 

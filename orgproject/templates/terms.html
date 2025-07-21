@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="about-hero">
+    <div class="hero-background-image"></div>
+    <div class="container">
+        <div class="hero-content-box">
+            <p class="hero-subtitle">LEGAL</p>
+            <h1>Terms of Service</h1>
+        </div>
+    </div>
+</section>
+
+<section class="content-section">
+    <div class="container">
+        <div class="content-box">
+            <h2>Terms of Service</h2>
+            <p class="last-updated">Last updated: {{ now().strftime('%B %d, %Y') }}</p>
+
+            <div class="policy-section">
+                <h3>1. Acceptance of Terms</h3>
+                <p>By accessing and using this website, you accept and agree to be bound by the terms and provision of this agreement.</p>
+            </div>
+
+            <div class="policy-section">
+                <h3>2. Use License</h3>
+                <p>Permission is granted to temporarily access the materials (information or software) on xyz school's website for personal, non-commercial viewing only.</p>
+                <p>This is the grant of a license, not a transfer of title, and under this license you may not:</p>
+                <ul>
+                    <li>Modify or copy the materials</li>
+                    <li>Use the materials for any commercial purpose</li>
+                    <li>Remove any copyright or other proprietary notations from the materials</li>
+                    <li>Transfer the materials to another person or "mirror" the materials on any other server</li>
+                </ul>
+            </div>
+
+            <div class="policy-section">
+                <h3>3. Disclaimer</h3>
+                <p>The materials on xyz school's website are provided on an 'as is' basis. xyz school makes no warranties, expressed or implied, and hereby disclaims and negates all other warranties including, without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights.</p>
+            </div>
+
+            <div class="policy-section">
+                <h3>4. Limitations</h3>
+                <p>In no event shall xyz school or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use the materials on xyz school's website.</p>
+            </div>
+
+            <div class="policy-section">
+                <h3>5. Revisions and Errata</h3>
+                <p>The materials appearing on xyz school's website could include technical, typographical, or photographic errors. xyz school does not warrant that any of the materials on its website are accurate, complete, or current.</p>
+            </div>
+
+            <div class="policy-section">
+                <h3>6. Contact Information</h3>
+                <p>If you have any questions about these Terms of Service, please contact us through our contact page or at:</p>
+                <p class="contact-info">
+                    xyz school<br>
+                    123 School Lane<br>
+                    Kathmandu, Nepal<br>
+                    Email: info@xyzschool.com
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+.content-section {
+    padding: 4rem 0;
+    background: var(--color-background-light);
+}
+
+.content-box {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    background: var(--color-background-white);
+    border-radius: 8px;
+    box-shadow: 0 2px 16px rgba(26,34,51,0.07);
+}
+
+.content-box h2 {
+    color: var(--color-primary-dark);
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.last-updated {
+    color: var(--color-text-light);
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+}
+
+.policy-section {
+    margin-bottom: 2.5rem;
+}
+
+.policy-section h3 {
+    color: var(--color-primary-dark);
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+}
+
+.policy-section p {
+    color: var(--color-text-dark);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.policy-section ul {
+    list-style-type: disc;
+    margin-left: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.policy-section li {
+    color: var(--color-text-dark);
+    line-height: 1.6;
+    margin-bottom: 0.5rem;
+}
+
+.contact-info {
+    background: var(--color-background-light);
+    padding: 1.5rem;
+    border-radius: 6px;
+    margin-top: 1rem;
+}
+
+@media (max-width: 768px) {
+    .content-section {
+        padding: 2rem 1rem;
+    }
+    
+    .content-box {
+        padding: 1.5rem;
+    }
+    
+    .content-box h2 {
+        font-size: 1.8rem;
+    }
+    
+    .policy-section h3 {
+        font-size: 1.3rem;
+    }
+}
+</style>
+{% endblock %} 

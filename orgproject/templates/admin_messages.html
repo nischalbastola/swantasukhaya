@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="admin-messages fade-in" style="max-width: none; width: 100%; padding-left: 0;">
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 1.2rem; margin-bottom: 1.2rem;">
+        <div style="flex:1; text-align:left;">
+            <a href="javascript:history.back()" class="back-to-list-link enhanced-back-btn" style="margin-bottom: 0; margin-left: 0; margin-top: 0;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 7px;"><path d="M15 18l-6-6 6-6"/></svg>
+                Back
+            </a>
+        </div>
+        <div style="flex:2; text-align:center;">
+            <h1 style="margin:0;">Contact Messages</h1>
+        </div>
+        <div style="flex:1;"></div>
+    </div>
+    <div style="overflow-x:auto; padding-left: 0; margin-left: 0;">
+        <table style="width:100%; min-width:900px; margin-left:0;">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Interest</th>
+                    <th>Date</th>
+                    <th>View</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for msg in messages %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ msg.name }}</td>
+                    <td>{{ msg.email }}</td>
+                    <td>{{ msg.phone }}</td>
+                    <td>{{ msg.interest or '-' }}</td>
+                    <td>{{ msg.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                    <td>
+                        <a href="{{ url_for('admin_message_detail', msg_id=msg.id) }}" title="View Message" style="color: #0d2c4f; font-size: 1.3em; display: inline-block; background: none !important; box-shadow: none !important; padding: 0; border: none;">
+                            <i class="fas fa-eye" style="background: none !important; box-shadow: none !important; padding: 0; border: none;"></i>
+                        </a>
+                    </td>
+                    <td>
+                        <form action="{{ url_for('delete_message', msg_id=msg.id) }}" method="POST" class="delete-form" style="display:inline;">
+                            <button type="submit" title="Delete" style="background: none; border: none; color: #d32f2f; font-size: 1.2em; cursor: pointer;">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                {% else %}
+                <tr><td colspan="8" style="text-align:center; color:#888;">No messages found.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+<style>
+.admin-messages table {
+    width: 100% !important;
+    min-width: 900px;
+    border-collapse: collapse;
+    margin-top: 1.5em;
+    font-size: 1em;
+    margin-left: 0 !important;
+}
+.admin-messages th, .admin-messages td {
+    border: 1px solid var(--color-border);
+    padding: 0.8em 1em;
+    text-align: left;
+    background: var(--color-background-white);
+}
+.admin-messages th {
+    background: var(--color-background-light);
+    color: var(--color-primary-dark);
+    font-weight: 700;
+}
+.admin-messages a[title="View Message"]:hover, .admin-messages a[title="View Message"]:focus {
+    color: #0d2c4f !important;
+    background: none !important;
+    box-shadow: none !important;
+    text-decoration: none !important;
+}
+</style>
+{% endblock %}

@@ -1,0 +1,81 @@
+a{% extends "base.html" %}
+{% block content %}
+<div class="content-section">
+    <div class="container">
+        <section class="admin-messages fade-in" style="max-width: 600px; margin: 2.5em auto; background: var(--color-background-white); border-radius: 18px; padding: 2.5em 2em; box-shadow: 0 2px 16px rgba(0,0,0,0.04);">
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 1.2rem; margin-bottom: 1.2rem;">
+                <div style="flex:1; text-align:left;">
+                    <a href="{{ url_for('admin_messages') }}" class="back-to-list-link enhanced-back-btn" style="margin-bottom: 0; margin-left: 0; margin-top: 0;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 7px;"><path d="M15 18l-6-6 6-6"/></svg>
+                        Back to Messages
+                    </a>
+                </div>
+                <div style="flex:2; text-align:center;">
+                    <h1 style="margin:0;">Message Details</h1>
+                </div>
+                <div style="flex:1;"></div>
+            </div>
+            <div style="margin-top: 2.2rem;">
+                <table style="width:100%; border-collapse: collapse;">
+                    <tr><th style="text-align:left; width: 140px;">Name:</th><td>{{ msg.name }}</td></tr>
+                    <tr><th style="text-align:left;">Email:</th><td>{{ msg.email }}</td></tr>
+                    <tr><th style="text-align:left;">Phone:</th><td>{{ msg.phone }}</td></tr>
+                    <tr><th style="text-align:left;">Interest:</th><td>{{ msg.interest or '-' }}</td></tr>
+                    <tr><th style="text-align:left;">Date:</th><td>{{ msg.created_at.strftime('%Y-%m-%d %H:%M') }}</td></tr>
+                    <tr><th style="text-align:left; vertical-align: top;">Message:</th><td style="white-space: pre-line;">{{ msg.message }}</td></tr>
+                </table>
+            </div>
+        </section>
+    </div>
+</div>
+<style>
+.admin-message-detail {
+    max-width: 600px;
+    margin: 2.5em auto 2em auto;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 2px 16px rgba(26,34,51,0.06);
+    padding: 2.5em 2em 2em 2em;
+}
+.detail-header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.7em;
+    margin-bottom: 1.5em;
+}
+.detail-header h2 {
+    font-family: var(--font-serif);
+    color: var(--color-primary-dark);
+    margin: 0;
+    font-size: 2em;
+}
+.back-link {
+    color: var(--color-primary-light);
+    text-decoration: none;
+    font-size: 1em;
+    margin-bottom: 0.5em;
+    display: inline-block;
+}
+.back-link:hover {
+    text-decoration: underline;
+}
+.detail-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2em;
+}
+.detail-row {
+    font-size: 1.08em;
+    color: #1a2233;
+}
+.detail-message {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 1em;
+    margin-top: 0.3em;
+    color: #212529;
+    font-size: 1.08em;
+}
+</style>
+{% endblock %} 

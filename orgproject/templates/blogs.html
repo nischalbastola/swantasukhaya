@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+{% block title %}Blogs - xyz school{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="about-hero blogs-enhanced-hero blogs-hero" style="padding: 3rem 0 2.5rem 0; min-height: 40vh;">
+    <div class="hero-background-image"></div>
+    <div class="container">
+        <div class="hero-content-box blogs-hero-content">
+            <p class="hero-subtitle blogs-subtitle">OUR STORIES</p>
+            <h1 class="blogs-main-title">Latest News & Updates</h1>
+            <p class="blogs-hero-description">Stay informed with our latest activities, achievements, and community impact stories</p>
+        </div>
+    </div>
+</section>
+
+<section class="blog-list-section" style="padding-top: 2rem; padding-bottom: 1.2rem;">
+    <div class="blog-search-container" style="margin: 0 auto 2rem auto; max-width: 640px;">
+        <form method="GET" action="{{ url_for('blogs') }}" class="blog-search-form">
+            <div class="search-input-wrapper">
+                <input type="search" name="q" placeholder="Search blogs..." value="{{ request.args.get('q', '') }}" class="blog-search-input">
+                <button type="submit" class="blog-search-button">
+                    <svg viewBox="0 0 24 24" class="search-icon">
+                        <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                    </svg>
+                </button>
+            </div>
+        </form>
+    </div>
+    <div class="blog-list-grid">
+        {% for row in posts|batch(2, '') %}
+        <div class="blog-list-row">
+            {% for post in row %}
+            {% if post %}
+            <article class="blog-list-card fade-in-on-scroll">
+                <div class="blog-list-img-wrap">
+                    <img src="{{ url_for('static', filename='uploads/' + post.image_filename) if post.image_filename else url_for('static', filename='images/placeholder_blog.jpg') }}" alt="Blog Image">
+                </div>
+                <div class="blog-list-content">
+                    <h2 class="blog-list-title"><a href="{{ url_for('blog_detail', blog_id=post.id) }}">{{ post.title }}</a></h2>
+                    <hr class="blog-list-underline">
+                    <div class="blog-list-meta">
+                        <span class="blog-list-date">{{ post.date_posted.strftime('%B %d, %Y') }}</span>
+                        <span style="margin: 0 0.7em; color: #bfc6d1;">|</span>
+                        <span class="blog-list-author">{{ post.author_name }}</span>
+                    </div>
+                </div>
+            </article>
+            {% endif %}
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="blog-list-card blog-list-empty fade-in-on-scroll">
+            <p>No blog posts found. Try a different search or check back later!</p>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<style>
+/* Enhanced Blogs Hero Section */
+.blogs-enhanced-hero {
+  position: relative;
+  overflow: hidden;
+}
+
+.blogs-enhanced-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6));
+  z-index: 1;
+}
+
+.blogs-hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.blogs-subtitle {
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.blogs-main-title {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 1rem 0;
+  line-height: 1.2;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.blogs-hero-description {
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+  line-height: 1.5;
+  font-weight: 300;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Responsive Blogs Hero */
+@media (max-width: 768px) {
+  .blogs-enhanced-hero {
+    padding: 2rem 0 2rem 0 !important;
+    min-height: 35vh !important;
+  }
+  
+  .blogs-subtitle {
+    font-size: 0.8rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .blogs-main-title {
+    font-size: 2.2rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .blogs-hero-description {
+    font-size: 1rem;
+    padding: 0 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .blogs-main-title {
+    font-size: 1.8rem;
+  }
+  
+  .blogs-hero-description {
+    font-size: 0.95rem;
+  }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Fade-in on scroll for blog cards
+  const cards = document.querySelectorAll('.blog-list-card.fade-in-on-scroll');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  cards.forEach(card => observer.observe(card));
+});
+</script>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="admin-messages fade-in">
+    <h2>Update Gallery</h2>
+    <form method="POST" enctype="multipart/form-data" class="gallery-upload-form">
+        <input type="file" name="images" accept="image/*" multiple required>
+        <button type="submit">Upload Image(s)</button>
+    </form>
+    <h3>Gallery Images</h3>
+    <div class="gallery-grid">
+    {% for img in images %}
+        <div class="gallery-thumb">
+            <img src="{{ url_for('static', filename='uploads/' ~ img.filename) }}" alt="Gallery Image" style="max-width:180px; border-radius:10px; margin-bottom:0.5em;">
+            <form method="POST" action="{{ url_for('delete_gallery_image', image_id=img.id) }}" class="delete-form">
+                <button type="submit">Delete</button>
+            </form>
+        </div>
+    {% endfor %}
+    </div>
+</section>
+<style>
+.gallery-upload-form { margin-bottom: 2em; }
+.gallery-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5em;
+}
+.gallery-thumb {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #eaf2ff;
+    border-radius: 12px;
+    padding: 1em 1em 0.5em 1em;
+    box-shadow: 0 2px 8px rgba(79,140,255,0.07);
+}
+.gallery-thumb img { box-shadow: 0 2px 8px rgba(79,140,255,0.08); }
+</style>
+{% endblock %} 

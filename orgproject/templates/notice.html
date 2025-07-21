@@ -1,0 +1,563 @@
+{% extends "base.html" %}
+{% block title %}Our Work - xyz organization{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="about-hero work-hero notice-hero" style="padding: 3rem 0 2.5rem 0; min-height: 40vh;">
+    <div class="hero-background-image"></div>
+    <div class="container">
+        <div class="hero-content-box work-hero-content">
+            <p class="hero-subtitle work-subtitle">OUR WORK</p>
+            <h1 class="work-main-title">Making a Difference</h1>
+            <p class="work-hero-description">Discover our impactful projects and community initiatives</p>
+        </div>
+    </div>
+</section>
+
+<!-- Work Introduction -->
+<!-- Removed work-intro section -->
+
+<!-- Work Search Bar -->
+<section class="work-search-section" style="margin: 1.5rem 0;">
+  <div class="blog-search-container" style="margin: 0 auto; max-width: 640px;">
+    <form method="GET" action="{{ url_for('work') }}" class="blog-search-form">
+      <div class="search-input-wrapper">
+        <input type="search" name="q" placeholder="Search work..." value="{{ request.args.get('q', '') }}" class="blog-search-input">
+        <button type="submit" class="blog-search-button">
+          <svg viewBox="0 0 24 24" class="search-icon">
+            <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+          </svg>
+        </button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- Work Grid Section -->
+<section class="work-showcase">
+  <div class="work-container">
+    <div class="work-grid">
+      {% for row in works|batch(2, '') %}
+      <div class="work-row">
+        {% for work in row %}
+        {% if work %}
+        <article class="work-card" data-animate="fade-up">
+        <div class="work-card-image">
+            <img src="{{ url_for('static', filename='uploads/' + work.image_filename) }}" 
+                 alt="{{ work.title }}" 
+                 loading="lazy">
+            <div class="image-overlay"></div>
+          </div>
+          <div class="work-card-content">
+            <h3 class="work-title">
+              <a href="{{ url_for('work_detail', work_id=work.id) }}">{{ work.title }}</a>
+            </h3>
+            <div class="work-underline"></div>
+            <div class="work-meta">
+              <span class="work-date">{{ work.created_at.strftime('%B %d, %Y') }}</span>
+              <span class="meta-separator">|</span>
+              <span class="work-author">Swantasukhaya Paropakar Pratishthan</span>
+        </div>
+            <p class="work-description">{{ work.content | truncate(120, True, '...') }}</p>
+        </div>
+      </article>
+        {% endif %}
+        {% endfor %}
+      </div>
+      {% else %}
+      <div class="work-empty">
+        <div class="empty-content">
+          <h3>No Projects Yet</h3>
+          <p>We're working on amazing projects. Check back soon!</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<style>
+/* Enhanced Work Hero Section */
+.work-hero {
+  position: relative;
+  overflow: hidden;
+}
+
+.work-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6));
+  z-index: 1;
+}
+
+.work-hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.work-subtitle {
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.work-main-title {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 1rem 0;
+  line-height: 1.2;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.work-hero-description {
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+  line-height: 1.5;
+  font-weight: 300;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* Responsive Hero */
+@media (max-width: 768px) {
+  .work-hero {
+    padding: 2rem 0 2rem 0 !important;
+    min-height: 35vh !important;
+  }
+  
+  .work-subtitle {
+    font-size: 0.8rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .work-main-title {
+    font-size: 2.2rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .work-hero-description {
+    font-size: 1rem;
+    padding: 0 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .work-main-title {
+    font-size: 1.8rem;
+  }
+  
+  .work-hero-description {
+    font-size: 0.95rem;
+  }
+}
+
+/* Work Introduction Section */
+.work-intro {
+  padding: 2rem 0 0.5rem 0;
+  background: #f9fbfd;
+  text-align: center;
+}
+
+.work-intro-text {
+  font-size: 1.1rem;
+  color: #4a5568;
+  margin: 0;
+  line-height: 1.6;
+  font-weight: 400;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.work-intro-text .org-name {
+  color: #000000;
+  font-weight: 500;
+}
+
+/* Work Showcase Section */
+.work-showcase {
+  padding: 0 0 5rem 0;
+  background: #f9fbfd;
+  min-height: 60vh;
+}
+
+.work-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* Work Grid */
+.work-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-top: 0;
+}
+
+.work-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+/* Work Cards */
+.work-card {
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(40px);
+  display: flex;
+  align-items: stretch;
+}
+
+.work-card.animate {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.work-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+/* Card Image */
+.work-card-image {
+  position: relative;
+  width: 180px;
+  min-width: 180px;
+  height: 160px;
+  overflow: hidden;
+  border-radius: 12px 0 0 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.work-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.work-card:hover .work-card-image img {
+  transform: scale(1.05);
+}
+
+.image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.1) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.work-card:hover .image-overlay {
+  opacity: 1;
+}
+
+/* Card Content */
+.work-card-content {
+  flex: 1;
+  padding: 1.5rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.work-title {
+  font-size: 1.375rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
+  line-height: 1.3;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.work-title a {
+  color: #1a202c;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.work-title a:hover {
+  color: #3182ce;
+}
+
+.work-underline {
+  width: 40px;
+  height: 2px;
+  background: #3182ce;
+  margin: 0 0 1rem 0;
+  border-radius: 1px;
+}
+
+.work-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+}
+
+.work-date {
+  color: #718096;
+  font-weight: 500;
+}
+
+.meta-separator {
+  color: #cbd5e0;
+  margin: 0 0.2rem;
+}
+
+.work-author {
+  color: #000000;
+  font-weight: 500;
+}
+
+.work-description {
+  color: #4a5568;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+
+
+/* Empty State */
+.work-empty {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  text-align: center;
+}
+
+.empty-content h3 {
+  font-size: 1.5rem;
+  color: #4a5568;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.empty-content p {
+  color: #718096;
+  font-size: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .work-container {
+    padding: 0 1.5rem;
+  }
+  
+  .work-card-image {
+    width: 160px;
+    min-width: 160px;
+    height: 140px;
+  }
+  
+  .work-card-content {
+    padding: 1.25rem 1.5rem;
+  }
+  
+  .work-title {
+    font-size: 1.25rem;
+  }
+  
+  .work-description {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .work-intro {
+    padding: 1.5rem 0 0.25rem 0;
+  }
+  
+  .work-intro-text {
+    font-size: 1.25rem;
+    padding: 0 1rem;
+  }
+  
+  .work-showcase {
+    padding: 3rem 0 4rem 0;
+  }
+  
+  .work-container {
+    padding: 0 1rem;
+  }
+  
+  .work-row {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .work-card {
+    flex-direction: column;
+  }
+  
+  .work-card-image {
+    width: 100%;
+    min-width: auto;
+    height: 200px;
+    border-radius: 12px 12px 0 0;
+  }
+  
+  .work-card-content {
+    padding: 1.5rem 1.25rem;
+  }
+  
+  .work-title {
+    font-size: 1.25rem;
+  }
+  
+  .work-description {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .work-container {
+    padding: 0 0.75rem;
+  }
+  
+  .work-grid {
+    gap: 1.25rem;
+  }
+  
+  .work-row {
+    gap: 1.25rem;
+  }
+  
+  .work-card-image {
+    height: 180px;
+  }
+  
+  .work-card-content {
+    padding: 1.25rem 1rem;
+  }
+  
+  .work-title {
+    font-size: 1.125rem;
+  }
+  
+  .work-underline {
+    width: 30px;
+  }
+}
+
+/* Animation Delays for Staggered Effect */
+.work-card:nth-child(1) { transition-delay: 0ms; }
+.work-card:nth-child(2) { transition-delay: 100ms; }
+.work-card:nth-child(3) { transition-delay: 200ms; }
+.work-card:nth-child(4) { transition-delay: 300ms; }
+.work-card:nth-child(5) { transition-delay: 400ms; }
+.work-card:nth-child(6) { transition-delay: 500ms; }
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .work-card {
+    transition: none;
+  }
+  
+  .work-card-image img {
+    transition: none;
+  }
+}
+
+.work-card:focus-within {
+  outline: 2px solid #3182ce;
+  outline-offset: 2px;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Intersection Observer for smooth animations
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('animate');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  // Observe all work cards
+  const workCards = document.querySelectorAll('.work-card');
+  workCards.forEach(card => {
+    observer.observe(card);
+  });
+
+  // Image loading optimization
+  const images = document.querySelectorAll('.work-card-image img');
+  images.forEach(img => {
+    img.addEventListener('load', function() {
+      this.style.opacity = '1';
+    });
+    
+    img.addEventListener('error', function() {
+      this.parentElement.innerHTML = '<div style="display: flex; align-items: center; justify-content: center; height: 100%; background: #f7fafc; color: #718096; font-size: 0.9rem;">Image not available</div>';
+    });
+  });
+
+  // Enhanced hover effects for desktop
+  if (window.innerWidth > 768) {
+    workCards.forEach(card => {
+      card.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateY(-8px)';
+      });
+      
+      card.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateY(0)';
+      });
+    });
+  }
+
+  // Keyboard navigation support
+  workCards.forEach(card => {
+    card.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        const link = this.querySelector('.work-title a');
+        if (link) {
+          window.location.href = link.href;
+        }
+      }
+    });
+  });
+});
+</script>
+{% endblock %} 

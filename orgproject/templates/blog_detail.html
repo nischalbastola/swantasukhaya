@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+<div class="notice-detail-container" style="padding-top: 0;">
+    <div class="container">
+        <article class="notice-detail-card">
+            <header class="notice-detail-header" style="display: flex; align-items: center; justify-content: space-between; gap: 1.2rem;">
+                <div style="display: flex; align-items: center; gap: 1.2rem; flex: 1;">
+                    <a href="javascript:history.back()" class="back-to-list-link enhanced-back-btn" style="margin-bottom: 0; margin-left: 0; margin-top: 0; flex-shrink: 0;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 7px;"><path d="M15 18l-6-6 6-6"/></svg>
+                        Back
+                    </a>
+                </div>
+                <h1 style="margin: 0; flex: 2; text-align: center;">{{ post.title }}</h1>
+                <div style="flex: 1; text-align: right;">
+                    <div class="notice-meta" style="justify-content: flex-end;">
+                        <span>By {{ post.author_name }}</span> |
+                        <time datetime="{{ post.date_posted.strftime('%Y-%m-%d') }}">{{ post.date_posted.strftime('%B %d, %Y') }}</time>
+                    </div>
+                </div>
+            </header>
+
+            <div class="notice-detail-body">
+                {% for paragraph in post.content.split('\n') %}
+                    {% if paragraph.strip() %}<p>{{ paragraph|safe }}</p>{% endif %}
+                {% endfor %}
+            </div>
+
+            {% if post.file_attachment %}
+            <footer class="notice-detail-footer">
+                <h3><i class="fas fa-paperclip"></i> Attachments</h3>
+                <ul class="attachment-list">
+                {% for fname in post.file_attachment.split(',') if fname %}
+                    <li>
+                        <a href="{{ url_for('static', filename='uploads/' ~ fname) }}" download style="color: #181d26; text-decoration: none; font-weight: 500;">
+                            <i class="fas fa-download"></i>
+                            {{ fname }}
+                        </a>
+                    </li>
+                {% endfor %}
+                </ul>
+            </footer>
+            <style>
+            .attachment-list li a {
+                color: #181d26 !important;
+                text-decoration: none;
+                font-weight: 500;
+            }
+            .attachment-list li a:hover {
+                text-decoration: underline;
+            }
+            </style>
+            {% endif %}
+        </article>
+    </div>
+</div>
+{% endblock %} 
